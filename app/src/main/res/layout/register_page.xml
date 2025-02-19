@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id = "@+id/register_illustration"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/register_page_illustration"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/background_view"
+        />
+
+    <View
+        android:id="@+id/background_view"
+        android:layout_width="0dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_shape1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id = "@+id/textView1"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_an_account"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/ritam_sans_bold"
+        app:layout_constraintTop_toTopOf="@id/background_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+<!--Username-->
+    <TextView
+        android:id = "@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/username"
+        android:textSize="16sp"
+        android:textColor="@color/dark_blue"
+        android:textStyle="bold"
+        android:fontFamily="@font/ritam_sans_bold"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextUsername"
+        />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf= "@+id/textView2"
+        app:layout_constraintTop_toBottomOf= "@+id/textView1"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/custom_editbox1"
+        android:hint="@string/enter_your_username"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:fontFamily="@font/ritam_sans_bold"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
+        />
+
+<!--Email-->
+    <TextView
+        android:id = "@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/email_address"
+        android:textSize="16sp"
+        android:textColor="@color/dark_blue"
+        android:textStyle="bold"
+        android:fontFamily="@font/ritam_sans_bold"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEmail"/>
+
+    <EditText
+        android:id = "@+id/editTextEmail"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf= "@+id/textView3"
+        app:layout_constraintTop_toBottomOf= "@+id/editTextUsername"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/custom_editbox1"
+        android:hint="@string/enter_your_email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:fontFamily="@font/ritam_sans_bold"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"/>
+
+<!--    Password-->
+
+    <TextView
+        android:id = "@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/password"
+        android:textSize="16sp"
+        android:textColor="@color/dark_blue"
+        android:textStyle="bold"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        />
+
+    <EditText
+        android:id = "@+id/editTextPassword"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf= "@+id/textView4"
+        app:layout_constraintTop_toBottomOf= "@+id/editTextEmail"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/custom_editbox1"
+        android:hint="@string/enter_your_password"
+        android:fontFamily="@font/ritam_sans_bold"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"/>
+
+    <Button
+        android:id="@+id/btn_sign_in"
+        android:layout_marginTop="40dp"
+        android:layout_width="130dp"
+        android:layout_height="48dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+        app:layout_constraintBottom_toBottomOf="@id/background_view"
+        android:text="@string/sign_up"
+        android:background="@drawable/custom_button1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="@font/ritam_sans_bold"
+        android:textAllCaps="false"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:id = "@+id/linearGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf= "@+id/btn_sign_in"
+        app:layout_constraintEnd_toEndOf= "@+id/btn_sign_in"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="30dp">
+
+        <TextView
+            android:id="@+id/text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Have an account already?"
+            android:fontFamily="@font/ritam_sans_medium"
+            android:textSize = "16sp"
+            android:textColor="@color/gray"
+            android:layout_marginEnd="4dp" />  <!-- Space between the two texts -->
+
+        <TextView
+            android:id="@+id/text_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign in"
+            android:textSize = "16sp"
+            android:fontFamily="@font/ritam_sans_demibold"
+            android:textColor="@color/black"
+            android:layout_marginStart="4dp"
+            />  <!-- Space between the two texts -->
+    </LinearLayout>
+
+
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>
