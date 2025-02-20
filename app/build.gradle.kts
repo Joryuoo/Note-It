@@ -70,4 +70,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //for circular image view
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    //for shapable image view
+    implementation("com.google.android.material:material:1.7.0")
+
+    //splash screen
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 }
+

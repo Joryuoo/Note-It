@@ -11,12 +11,14 @@
     <color name = "blueish_gray">#788daa</color>
     <color name = "grayish_purple">#a69cac</color>
     <color name="light_blue">#bed9f5</color>
-    <color name = "gray">#585858</color>
+
     <color name = "yellow">#FFC727</color>
     <color name = "yellow1">#FFD317</color>
     <color name="yellow3">#F0CB62</color>
 
+    <color name = "gray">#585858</color>
     <color name = "light_gray">#909090</color>
     <color name = "light_gray1">#C9C9C9</color>
+    <color name = "light_gray2">#eeecec</color>
 
 </resources>
