@@ -1,6 +1,8 @@
 package com.android.noteit
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -19,6 +21,18 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sign_up_page)
+
+
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            var requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            var requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
 
         val etUsername = findViewById<EditText>(R.id.editTextUsername)
         val etEmail = findViewById<EditText>(R.id.editTextEmail)

@@ -31,11 +31,11 @@
         />
 
     <LinearLayout
+        android:id = "@+id/headerLinearGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf= "@+id/noteItText"
         android:orientation="horizontal"
-        android:id = "@+id/headerLinearGroup"
         android:layout_marginTop="17dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -77,50 +77,18 @@
 
     </LinearLayout>
 
-    <View
-        android:id = "@+id/noteContainter"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf = "@+id/headerLinearGroup"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/custom_shape2"
+<!--    dynamic frag -->
+    <FrameLayout
+        android:id="@+id/flFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/headerLinearGroup"
+        app:layout_constraintBottom_toTopOf="@id/btnNotes"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"/>
 
-        />
 
-    <TextView
-        android:id = "@+id/textTitle"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="@id/noteContainter"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/ritam_sans_bold"
-        android:textColor="@color/black"
-        android:text = "Welcome to Note It!"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf= "@+id/noteContainter"
-        app:layout_constraintStart_toStartOf="@+id/noteContainter"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="10dp"
-        />
-
-    <TextView
-        android:id = "@+id/textBody"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="@id/noteContainter"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/ritam_sans_medium"
-        android:textColor="@color/black"
-        android:text = "@string/instructions"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf= "@+id/textTitle"
-        app:layout_constraintStart_toStartOf="@+id/noteContainter"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"/>
 
     <Button
         android:id="@+id/btnAdd"
@@ -133,44 +101,54 @@
         android:layout_margin="35dp"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnHome"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/selected_home_icon"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnNotes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf= "@+id/btnNotes"
-        android:background="@drawable/selected_home_icon"
         android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="20dp"/>
 
-    <Button
+
+    <ImageButton
         android:id="@+id/btnNotes"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/default_notes_icon"
         app:layout_constraintStart_toEndOf="@+id/btnHome"
         app:layout_constraintEnd_toStartOf="@+id/btnTask"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/default_notes_icon"
         android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="20dp"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/btnTask"
-        android:layout_width="30dp"
-        android:layout_height="35dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:src="@drawable/default_notes_icon"
         app:layout_constraintStart_toEndOf="@+id/btnNotes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/default_task_icon"
         android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="20dp"/>
 
 
 

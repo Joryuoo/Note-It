@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="10dp">
 
     <ImageView
         android:id = "@+id/register_illustration"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
+        app:layout_constraintHeight_min="300dp"
+        android:layout_marginTop="10dp"
+        android:layout_margin="25dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/register_page_illustration"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,7 +24,8 @@
     <View
         android:id="@+id/background_view"
         android:layout_width="0dp"
-        android:layout_height="480dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_min="450dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_shape1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,13 +52,12 @@
         android:id = "@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/editTextUsername"
         android:text="@string/username"
         android:textSize="16sp"
         android:textColor="@color/dark_blue"
         android:textStyle="bold"
         android:fontFamily="@font/ritam_sans_demibold"
-        android:layout_marginStart="50dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextUsername"
         />
@@ -61,14 +65,17 @@
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_marginTop="30dp"
+
         android:layout_width="0dp"
+        app:layout_constraintWidth_min="310dp"
+        app:layout_constraintWidth_max="500dp"
+
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf= "@+id/textView2"
         app:layout_constraintTop_toBottomOf= "@+id/textView1"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf= "parent"
         android:background="@drawable/custom_editbox1"
         android:hint="@string/enter_your_username"
         android:paddingStart="10dp"
@@ -83,27 +90,30 @@
         android:id = "@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/editTextEmail"
         android:text="@string/email_address"
         android:textSize="16sp"
         android:textColor="@color/dark_blue"
         android:textStyle="bold"
         android:fontFamily="@font/ritam_sans_demibold"
-        android:layout_marginStart="50dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmail"/>
 
     <EditText
         android:id = "@+id/editTextEmail"
         android:layout_marginTop="30dp"
+
         android:layout_width="0dp"
+        app:layout_constraintWidth_min="310dp"
+        app:layout_constraintWidth_max="500dp"
+
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf= "@+id/textView3"
+        app:layout_constraintStart_toStartOf= "parent"
         app:layout_constraintTop_toBottomOf= "@+id/editTextUsername"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/custom_editbox1"
         android:hint="@string/enter_your_email"
         android:inputType="textEmailAddress"
@@ -119,12 +129,11 @@
         android:id = "@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/editTextPassword"
         android:text="@string/password"
         android:textSize="16sp"
         android:textColor="@color/dark_blue"
         android:fontFamily="@font/ritam_sans_demibold"
-        android:layout_marginStart="50dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         />
@@ -132,14 +141,18 @@
     <EditText
         android:id = "@+id/editTextPassword"
         android:layout_marginTop="30dp"
+
         android:layout_width="0dp"
+        app:layout_constraintWidth_min="310dp"
+        app:layout_constraintWidth_max="500dp"
+
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf= "@+id/textView4"
+
         app:layout_constraintTop_toBottomOf= "@+id/editTextEmail"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
+        app:layout_constraintStart_toStartOf= "parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/custom_editbox1"
         android:hint="@string/enter_your_password"
         android:fontFamily="@font/ritam_sans_medium"
@@ -178,7 +191,7 @@
         app:layout_constraintStart_toStartOf= "@+id/btn_sign_up"
         app:layout_constraintEnd_toEndOf= "@+id/btn_sign_up"
         app:layout_constraintTop_toBottomOf="@+id/btn_sign_up"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="30dp">
 
         <TextView

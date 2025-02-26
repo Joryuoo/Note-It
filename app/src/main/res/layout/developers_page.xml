@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_pattern1">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/yellow"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/btnBack_to_settings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:scaleType="centerInside"
+        android:padding="12dp"
+        android:src="@drawable/back2"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/page_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="26sp"
+        android:text="The Developers"
+        android:fontFamily="@font/ritam_sans_bold"
+        app:layout_constraintStart_toEndOf="@id/btnBack_to_settings"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="22dp"
+        android:textColor="@color/black"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintWidth_max="600dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp">
+
+                <!-- Background View -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="120dp"
+                    android:background="@drawable/custom_shape5"/>
+
+                <!-- Profile Image -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="0dp"
+                    app:civ_border_width="10dp"
+                    app:civ_border_color="@color/white"
+                    android:src="@drawable/ledon_profile"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jhon Ryan D. Ledon"
+                    android:fontFamily="@font/ritam_sans_bold"
+                    android:textSize="26sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="220dp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ledon_role"
+                    android:fontFamily="@font/ritam_sans_demibold"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="260dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ledon_introduction"
+                    android:fontFamily="@font/ritam_sans_medium"
+                    android:textSize="16sp"
+                    android:justificationMode="inter_word"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="325dp"
+                    android:textColor="@color/black"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingTop="10dp">
+
+                <!-- Background View -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="120dp"
+                    android:background="@drawable/custom_shape5"/>
+
+                <!-- Profile Image -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="0dp"
+                    app:civ_border_width="10dp"
+                    app:civ_border_color="@color/white"
+                    android:src="@drawable/lapis_profile"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Andrae Louise U. Lapis"
+                    android:fontFamily="@font/ritam_sans_bold"
+                    android:textSize="26sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="220dp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Case Designer &amp; Mobile Developer of Note It"
+                    android:fontFamily="@font/ritam_sans_demibold"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="260dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I’m a Computer Science student from Cebu Institute of Technology - University, always looking for ways to improve my coding skills and problem-solving abilities. I enjoy learning new technologies and contributing to building functional and engaging applications."
+                    android:fontFamily="@font/ritam_sans_medium"
+                    android:textSize="16sp"
+                    android:justificationMode="inter_word"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="330dp"
+                    android:textColor="@color/black"/>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

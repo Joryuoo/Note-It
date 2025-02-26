@@ -13,6 +13,15 @@
         android:theme="@style/Theme.NoteIt"
         tools:targetApi="31">
         <activity
+            android:name=".AboutDeveloperActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogoutPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
@@ -26,6 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".LandingActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:theme="@style/Theme.NoteIt.Splashscreen">
             <intent-filter>
