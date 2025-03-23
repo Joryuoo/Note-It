@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/btnBack_to_settings"
+        android:id="@+id/btnBack"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="15dp"
@@ -34,7 +34,7 @@
         android:textSize="26sp"
         android:text="The Developers"
         android:fontFamily="@font/ritam_sans_bold"
-        app:layout_constraintStart_toEndOf="@id/btnBack_to_settings"
+        app:layout_constraintStart_toEndOf="@id/btnBack"
 
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="22dp"
