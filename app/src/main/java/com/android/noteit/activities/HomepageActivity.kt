@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.activities
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import androidx.activity.addCallback
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.android.noteit.R
+import com.android.noteit.fragments.HomePageFragment1
+import com.android.noteit.fragments.HomePageFragment2
+import com.android.noteit.fragments.HomePageFragment3
 
 class HomepageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +75,7 @@ class HomepageActivity : AppCompatActivity() {
                 btnHome.setImageResource(R.drawable.default_home_icon)
                 btnNotes.setImageResource(R.drawable.default_notes_icon)
                 btnTask.setImageResource(R.drawable.selected_task_icon)
+
                 replace(R.id.flFragment, taskFragment)
                 addToBackStack("task")
                 commit()

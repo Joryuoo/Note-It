@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.android.noteit.activities.AddNoteActivity
+import com.android.noteit.managers.NoteManager
+import com.android.noteit.R
 
 /**
  * A simple [Fragment] subclass.

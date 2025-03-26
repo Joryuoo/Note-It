@@ -1,12 +1,14 @@
-package com.android.noteit
+package com.android.noteit.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.android.noteit.R
+import com.android.noteit.managers.Note
+import com.android.noteit.managers.NoteManager
 
 class AddNoteActivity : AppCompatActivity() {
     private var noteIndex: Int? = null

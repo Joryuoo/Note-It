@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.managers
 
 object NoteManager {
     var notes = mutableListOf<Note>()

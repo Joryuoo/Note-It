@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.activities
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -9,13 +9,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 //email validation import
 import android.util.Patterns
+import com.android.noteit.R
+import com.android.noteit.managers.UserManager
 
 class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

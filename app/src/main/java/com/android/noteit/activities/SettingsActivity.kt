@@ -1,17 +1,19 @@
-package com.android.noteit
+package com.android.noteit.activities
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.android.noteit.R
 
-class AboutDeveloperActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.developers_page)
+        setContentView(R.layout.settings_page)
 
         //        screen orientation
         val isTablet: Boolean = (resources.configuration.screenLayout
@@ -23,10 +25,17 @@ class AboutDeveloperActivity : AppCompatActivity() {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
 
-        val btnBack = findViewById<ImageButton>(R.id.btnBack)
-        btnBack.setOnClickListener {
-            Log.e("Developer page", "back button")
+        val btnBackToProfile = findViewById<ImageButton>(R.id.btnBack_to_profile)
+        btnBackToProfile.setOnClickListener {
+            Log.e("Back button", "Clicked")
             finish()
+        }
+
+        val btnDevelopers = findViewById<LinearLayout>(R.id.btn_developers)
+        btnDevelopers.setOnClickListener{
+            Log.e("Developer Btn", "Clicked")
+            val intent = Intent(this, AboutDeveloperActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -80,7 +80,7 @@
         android:id = "@+id/profileSettingsView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
+        android:backgroundTint="@color/white"
         android:layout_marginTop="25dp"
         android:background="@drawable/custom_shape3"
         app:layout_constraintTop_toBottomOf="@+id/user_email"

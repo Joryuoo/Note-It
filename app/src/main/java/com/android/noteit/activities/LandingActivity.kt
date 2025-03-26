@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.activities
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -11,6 +11,7 @@ import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.android.noteit.R
 
 class LandingActivity : AppCompatActivity() {
 
@@ -44,7 +45,7 @@ class LandingActivity : AppCompatActivity() {
 //            message
             Toast.makeText(this, "Note it now, remember it later!", Toast.LENGTH_SHORT).show()
 //            screen transitioning
-            val intent = Intent(this,SignupActivity::class.java)
+            val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
 

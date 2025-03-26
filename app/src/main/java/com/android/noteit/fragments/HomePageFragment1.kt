@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.android.noteit.activities.AddNoteActivity
+import com.android.noteit.managers.NoteManager
+import com.android.noteit.R
 
 class HomePageFragment1 : Fragment(R.layout.fragment_home_page1) {
 

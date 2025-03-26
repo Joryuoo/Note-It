@@ -1,4 +1,4 @@
-package com.android.noteit
+package com.android.noteit.managers
 
 // Temporary user model and manager
 data class User(val username: String, val email: String, val password: String)

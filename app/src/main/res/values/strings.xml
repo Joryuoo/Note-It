@@ -17,4 +17,5 @@ Type, write, and create anytime, anywhere.</string>
     <string name="ledon_introduction">Hi, I\'m a Computer Science student at Cebu Institute of Technology – University who sees coding as an art form. I’m passionate about creating intuitive and user-friendly applications, seamlessly blending design and functionality to enhance digital experiences. As an aspiring full-stack developer, I enjoy working on both the front-end and back-end, bringing ideas to life through code.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="what_would_you_like_to_do">What would you like to do?</string>
 </resources>
