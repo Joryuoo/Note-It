@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
 }
 
 android {
@@ -47,6 +48,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    //view binding
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -84,5 +91,11 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.10.0")
 
+    //recycler view
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+    //glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 }
 

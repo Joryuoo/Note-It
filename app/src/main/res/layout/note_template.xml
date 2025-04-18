@@ -23,6 +23,7 @@
 
     <TextView
         android:id="@+id/noteContent"
+        android:maxLines="3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ritam_sans_medium"

@@ -10,39 +10,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/seachBar"
-            android:imeOptions="actionSearch"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todolist_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/custom_editbox2"
-            android:hint="Search for notes"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
-            android:paddingStart="30dp"
-            android:padding="10dp"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:id = "@+id/ll_noteContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/ll_note_template"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
-            </LinearLayout>
-        </ScrollView>
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/task_template"
+            android:layout_margin="5dp"/>
     </LinearLayout>
+
+    <ImageView
+        android:id = "@+id/isScreenEmpty"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:src ="@drawable/empty_illustration"
+        />
+
+    <ImageView
+        android:id = "@+id/isEmpty"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:src ="@drawable/empty_illustration"
+        />
 
     <!-- Floating Add Button -->
     <Button

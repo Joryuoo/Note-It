@@ -3,35 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomePageFragment1">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.TaskArchiveFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_recyclerview"
+            android:id="@+id/arTask_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             />
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id = "@+id/isScreenEmpty"
+        android:id = "@+id/isArchiveEmpty"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:src ="@drawable/empty_illustration"
         />
 
-    <!-- Floating Add Button -->
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:background="@drawable/ic_add_icon"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="40dp"/>
 </FrameLayout>

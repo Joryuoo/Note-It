@@ -6,6 +6,8 @@ data class User(val username: String, val email: String, val password: String)
 object UserManager {
     var users = ArrayList<User>()
     var signed_in: User? = null
+    var noteList = ArrayList<Note>()
+    var taskList = ArrayList<TaskModel>()
 
     fun registerUser(username: String, email: String, password: String): String {
         if (users.any { it.username == username }) {
@@ -20,8 +22,8 @@ object UserManager {
         return "Registration Successful!"
     }
 
-    fun signinUser(email: String, password: String): Boolean {
-        val user = users.find { it.email == email && it.password == password }
+    fun signinUser(username: String, password: String): Boolean {
+        val user = users.find { it.username == username && it.password == password }
         return if (user != null) {
             signed_in = user
             true

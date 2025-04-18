@@ -14,8 +14,9 @@
     android:paddingEnd="20dp">
 
     <TextView
-        android:id="@+id/taskContent"
+        android:id="@+id/taskTitle"
         android:layout_width="0dp"
+        android:maxLines="2"
         android:layout_height="wrap_content"
         android:text="Lorem ipsum dolor sit amet."
         android:fontFamily="@font/ritam_sans_bold"
@@ -27,16 +28,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <View
+    <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@drawable/custom_shape5"
-        android:backgroundTint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:buttonTint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

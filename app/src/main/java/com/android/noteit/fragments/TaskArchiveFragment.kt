@@ -2,54 +2,47 @@ package com.android.noteit.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.View
-import android.widget.ImageButton
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.noteit.R
 import com.android.noteit.activities.AddTaskActivity
-import com.android.noteit.app.AppManager
-import com.android.noteit.datamodels.TodoListModel
-import com.android.noteit.utils.TodoListAdapter
-import android.util.Log // Added for logging examples
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast // Added for feedback examples
 import com.android.noteit.activities.OpenTaskActivity
+import com.android.noteit.app.AppManager
+import com.android.noteit.utils.TodoListAdapter
 
-class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
 
+class TaskArchiveFragment : Fragment(R.layout.fragment_task_archive) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var todoAdapter: TodoListAdapter // Hold a reference to the adapter if needed later
-    private lateinit var emptyImg: ImageView
+    private lateinit var emptylistImg: ImageView
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnAdd = view.findViewById<Button>(R.id.btnAdd)
-
-        emptyImg = view.findViewById(R.id.isScreenEmpty)
-
-        btnAdd.setOnClickListener {
-            startActivity(Intent(requireContext(), AddTaskActivity::class.java))
-        }
 
         // --- RecyclerView Setup ---
-        recyclerView = view.findViewById<RecyclerView>(R.id.todolist_recyclerview)
+        recyclerView = view.findViewById<RecyclerView>(R.id.arTask_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        emptylistImg = view.findViewById<ImageView>(R.id.isArchiveEmpty)
 
         val allTodos = AppManager.sessionUser?.taskList
-//        val filteredTodos = allTodos?.filter { !it.isArchived } ?: emptyList() // Provide empty list if null
+//        val filteredTodos = allTodos?.filter { it.isArchived } ?: emptyList() // Provide empty list if null
 
         val filteredTodos = allTodos
-            ?.filter { !it.isArchived } // 1. Filter out archived
+            ?.filter { it.isArchived } // 1. Filter out archived
             ?.sortedBy { it.isDone }    // 2. Sort by isDone (false comes first)
             ?: emptyList()              // 3. Handle null case
 
         if(filteredTodos.isEmpty()){
-            emptyImg.visibility = View.VISIBLE
+            emptylistImg.visibility = View.VISIBLE
         } else{
-            emptyImg.visibility = View.GONE
+            emptylistImg.visibility = View.GONE
         }
 
         // 2. Create the Adapter instance with callback implementations
@@ -86,23 +79,27 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
     override fun onResume() {
         super.onResume()
         val allTodos = AppManager.sessionUser?.taskList
-//        val filteredTodos = allTodos?.filter { !it.isArchived } ?: emptyList()
+//        val filteredTodos = allTodos?.filter { it.isArchived } ?: emptyList()
 
         val filteredTodos = allTodos
-            ?.filter { !it.isArchived } // 1. Filter out archived
+            ?.filter { it.isArchived } // 1. Filter out archived
             ?.sortedBy { it.isDone }    // 2. Sort by isDone (false comes first)
             ?: emptyList()              // 3. Handle null case
 
-        if(filteredTodos.isEmpty()){
-            emptyImg.visibility = View.VISIBLE
-        } else{
-            emptyImg.visibility = View.GONE
-        }
 
         if (::todoAdapter.isInitialized) {
             todoAdapter.updateList(filteredTodos) // Assumes updateList uses notifyDataSetChanged
         } else {
             Log.w("HomePageFragment2", "Adapter not initialized in onResume")
+        }
+
+        if (filteredTodos != null) {
+            if(filteredTodos.isEmpty()){
+                emptylistImg.visibility = View.VISIBLE
+            } else{
+
+                emptylistImg.visibility = View.GONE
+            }
         }
     }
 }

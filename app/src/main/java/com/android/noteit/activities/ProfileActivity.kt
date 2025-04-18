@@ -3,17 +3,30 @@ package com.android.noteit.activities
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 import com.android.noteit.managers.UserManager.signed_in
+import com.bumptech.glide.Glide
+import java.io.File
 
 class ProfileActivity : AppCompatActivity() {
+
+    private lateinit var username: TextView
+    private lateinit var email: TextView
+    private lateinit var profilePicture: de.hdodenhof.circleimageview.CircleImageView
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_page)
@@ -28,11 +41,27 @@ class ProfileActivity : AppCompatActivity() {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
 
-        var username = findViewById<TextView>(R.id.user_username)
-        var email = findViewById<TextView>(R.id.user_email)
+        username = findViewById(R.id.user_username)
+        email = findViewById(R.id.user_email)
+        profilePicture = findViewById(R.id.profilePicture)
 
-        username.text = signed_in?.username
-        email.text = signed_in?.email
+        if (AppManager.sessionUser?.profilepictureUri == null) {
+            profilePicture.setImageResource(R.drawable.profile_picture)
+        } else {
+            Glide.with(this)
+                .load(AppManager.sessionUser?.profilepictureUri)
+                .placeholder(R.drawable.profile_picture)
+                .into(profilePicture)
+        }
+        username.text = AppManager.sessionUser?.username
+        email.text = AppManager.sessionUser?.email
+
+        val btnEditProfile = findViewById<LinearLayout>(R.id.btn_edit_profile)
+
+        btnEditProfile.setOnClickListener {
+            Toast.makeText(this, "Edit Profile", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, EditProfileActivity::class.java))
+        }
 
 
         val btnBackToMain = findViewById<ImageButton>(R.id.btnBack_to_main)
@@ -40,6 +69,8 @@ class ProfileActivity : AppCompatActivity() {
             Log.e("ProfileActivity", "Back to main menu")
             finish()
         }
+
+
 
         //if mu back
         onBackPressedDispatcher.addCallback(this) {
@@ -60,4 +91,22 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    override fun onResume() {
+        super.onResume()
+
+        if (AppManager.sessionUser?.profilepictureUri == null) {
+            profilePicture.setImageResource(R.drawable.profile_picture)
+        } else {
+            Glide.with(this)
+                .load(AppManager.sessionUser?.profilepictureUri)
+                .placeholder(R.drawable.profile_picture)
+                .into(profilePicture)
+        }
+        username.text = AppManager.sessionUser?.username
+        email.text = AppManager.sessionUser?.email
+    }
+
+
 }

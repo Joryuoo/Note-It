@@ -10,9 +10,8 @@
         android:id = "@+id/register_illustration"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_min="300dp"
+
         android:layout_marginTop="10dp"
-        android:layout_margin="25dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/register_page_illustration"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -25,17 +24,18 @@
         android:id="@+id/background_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_min="450dp"
+        app:layout_constraintHeight_min="555dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_shape1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         />
 
     <TextView
         android:id = "@+id/textView1"
-        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_an_account"
@@ -46,30 +46,32 @@
         app:layout_constraintTop_toTopOf="@id/background_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/editTextUsername"
+        app:layout_constraintVertical_chainStyle="packed"
         />
 <!--Username-->
     <TextView
         android:id = "@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@+id/editTextUsername"
+        app:layout_constraintLeft_toLeftOf="@id/editTextUsername"
         android:text="@string/username"
         android:textSize="16sp"
         android:textColor="@color/dark_blue"
         android:textStyle="bold"
         android:fontFamily="@font/ritam_sans_demibold"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextUsername"
+        app:layout_constraintBottom_toTopOf="@id/editTextUsername"
+
         />
 
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_marginTop="30dp"
-
+        android:layout_marginBottom="12dp"
         android:layout_width="0dp"
         app:layout_constraintWidth_min="310dp"
         app:layout_constraintWidth_max="500dp"
-
         android:layout_height="48dp"
         app:layout_constraintTop_toBottomOf= "@+id/textView1"
         android:layout_marginStart="50dp"
@@ -83,7 +85,8 @@
         android:paddingEnd="0dp"
         android:fontFamily="@font/ritam_sans_medium"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
+        app:layout_constraintBottom_toTopOf="@id/editTextEmail"
+
         />
 
 <!--Email-->
@@ -98,19 +101,18 @@
         android:textStyle="bold"
         android:fontFamily="@font/ritam_sans_demibold"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextEmail"/>
+        app:layout_constraintBottom_toTopOf="@id/editTextEmail"/>
 
     <EditText
         android:id = "@+id/editTextEmail"
         android:layout_marginTop="30dp"
-
+        android:layout_marginBottom="12dp"
         android:layout_width="0dp"
         app:layout_constraintWidth_min="310dp"
         app:layout_constraintWidth_max="500dp"
-
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf= "parent"
-        app:layout_constraintTop_toBottomOf= "@+id/editTextUsername"
+        app:layout_constraintTop_toBottomOf= "@id/editTextUsername"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +124,8 @@
         android:paddingEnd="0dp"
         android:fontFamily="@font/ritam_sans_medium"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"/>
+
+        app:layout_constraintBottom_toTopOf="@id/editTextPassword"/>
 
 <!--    Password-->
 
@@ -136,20 +139,18 @@
         android:textColor="@color/dark_blue"
         android:fontFamily="@font/ritam_sans_demibold"
         android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        app:layout_constraintBottom_toTopOf="@id/editTextPassword"
         />
 
     <EditText
         android:id = "@+id/editTextPassword"
         android:layout_marginTop="30dp"
-
+        android:layout_marginBottom="12dp"
         android:layout_width="0dp"
         app:layout_constraintWidth_min="310dp"
         app:layout_constraintWidth_max="500dp"
-
         android:layout_height="48dp"
-
-        app:layout_constraintTop_toBottomOf= "@+id/editTextEmail"
+        app:layout_constraintTop_toBottomOf= "@id/editTextEmail"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintStart_toStartOf= "parent"
@@ -161,18 +162,54 @@
         android:paddingStart="10dp"
         android:paddingEnd="0dp"
         android:textSize="16sp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_sign_up"/>
+        app:layout_constraintBottom_toTopOf="@id/editTextConfirmPassword"/>
+
+    <!--   Confirm Password-->
+
+    <TextView
+        android:id = "@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/editTextConfirmPassword"
+        android:text="Confirm password"
+        android:textSize="16sp"
+        android:textColor="@color/dark_blue"
+        android:fontFamily="@font/ritam_sans_demibold"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/editTextConfirmPassword"
+        />
+
+    <EditText
+        android:id = "@+id/editTextConfirmPassword"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_min="310dp"
+        app:layout_constraintWidth_max="500dp"
+        android:layout_height="48dp"
+        app:layout_constraintTop_toBottomOf= "@id/editTextPassword"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintStart_toStartOf= "parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/custom_editbox1"
+        android:hint="Confirm Password"
+        android:fontFamily="@font/ritam_sans_medium"
+        android:inputType="textPassword"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_sign_up"/>
 
     <Button
         android:id="@+id/btn_sign_up"
-        android:layout_marginTop="40dp"
         android:layout_width="130dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintBottom_toBottomOf="@id/background_view"
+        app:layout_constraintTop_toBottomOf="@id/editTextConfirmPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/sign_up"
         android:background="@drawable/custom_button1"
         android:layout_gravity="center"
@@ -189,11 +226,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf= "@+id/btn_sign_up"
-        app:layout_constraintEnd_toEndOf= "@+id/btn_sign_up"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf= "parent"
+        app:layout_constraintEnd_toEndOf= "parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_sign_up"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="0dp">
 
         <TextView
             android:id="@+id/text_1"
@@ -203,7 +240,7 @@
             android:fontFamily="@font/ritam_sans_medium"
             android:textSize = "16sp"
             android:textColor="@color/gray"
-            android:layout_marginEnd="4dp" />  <!-- Space between the two texts -->
+            android:layout_marginEnd="4dp" />
 
         <TextView
             android:id="@+id/btn_sign_in"
@@ -214,7 +251,7 @@
             android:fontFamily="@font/ritam_sans_demibold"
             android:textColor="@color/black"
             android:layout_marginStart="4dp"
-            />  <!-- Space between the two texts -->
+            />
     </LinearLayout>
 
 

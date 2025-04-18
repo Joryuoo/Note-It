@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
+import com.android.noteit.datamodels.NoteModel
 import com.android.noteit.managers.Note
 import com.android.noteit.managers.NoteManager
 
@@ -29,10 +31,14 @@ class AddNoteActivity : AppCompatActivity() {
         // since ang index kay gi gi pass ra through intent
         if (noteIndex != -1) {
             // !! not-null assertion operator
-            val note = NoteManager.notes[noteIndex!!]
+            val note = AppManager.sessionUser?.noteList?.get(noteIndex!!)
             // load ang text sa edit text
-            etTitle.setText(note.title)
-            etNote.setText(note.content)
+            if (note != null) {
+                etTitle.setText(note.title)
+            }
+            if (note != null) {
+                etNote.setText(note.content)
+            }
         }
 
         btnBack.setOnClickListener {
@@ -49,12 +55,13 @@ class AddNoteActivity : AppCompatActivity() {
 
 //            if noteIndex != -1 meaning ang note kay gi load ra from existing note na stored sa data class
             if (noteIndex != -1) {
-                // Update existing note
-                // !! not-null assertion operator
-                NoteManager.notes[noteIndex!!] = Note(finalTitle, finalContent)
+                var note = AppManager.sessionUser?.noteList?.get(noteIndex!!)
+                if (note != null) {
+                    note.updateNote(finalTitle, finalContent)
+                }
             } else {
                 // Add new note
-                NoteManager.addNote(finalTitle, finalContent)
+                AppManager.sessionUser?.noteList?.add(0, NoteModel(finalTitle, finalContent))
             }
 
             val resultIntent = Intent()
@@ -64,8 +71,9 @@ class AddNoteActivity : AppCompatActivity() {
         }
 
         btnDelete.setOnClickListener{
-            if(noteIndex in NoteManager.notes.indices){
-                NoteManager.notes.removeAt(noteIndex!!)
+//            NoteManager.notes.indices
+            if(AppManager.sessionUser?.noteList?.indices?.contains(noteIndex) == true){
+                AppManager.sessionUser?.noteList?.removeAt(noteIndex!!)
                 finish()
             } else{
                 finish()

@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 import com.android.noteit.managers.UserManager
 
 class SigninActivity : AppCompatActivity() {
@@ -30,41 +31,41 @@ class SigninActivity : AppCompatActivity() {
         }
 
 
-        val etEmail = findViewById<EditText>(R.id.editTextEmail)
+        val etUsername = findViewById<EditText>(R.id.editTextUsername)
         val etPassword = findViewById<EditText>(R.id.editTextPassword)
         val btnSignup = findViewById<TextView>(R.id.btn_sign_up)
         val btnSignin = findViewById<Button>(R.id.btn_sign_in)
 
 
         btnSignin.setOnClickListener {
-            val email = etEmail.text.toString().trim()
+            val username = etUsername.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
-            if(email.isEmpty() || password.isEmpty()){
+            if(username.isEmpty() || password.isEmpty()){
                 Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            } else if(!isValidEmail(email)){
-                Toast.makeText(this, "Invalid Email Address", Toast.LENGTH_SHORT).show()
+            }else if(username.length < 3){
+                Toast.makeText(this, "Username is too short", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else if(password.length < 8){
                 Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val login = UserManager.signinUser(email, password);
+            val login = AppManager.signin(username, password)
 
             if(login){
-                Toast.makeText(this, "Naka log in", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Log in Successful", Toast.LENGTH_SHORT).show()
                 Log.e("Succ", "Log in Successful")
                 val intent = Intent(this, HomepageActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                //clear the edit text
-                etEmail.text.clear()
+
+                etUsername.text.clear()
                 etPassword.text.clear()
                 startActivity(intent)
                 finish()
             } else{
-                Toast.makeText(this, "Oops! Looks like your email or password is incorrect.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Oops! Looks like your username or password is incorrect.", Toast.LENGTH_SHORT).show()
                 Log.e("ERROR", "wala naka log in")
                 return@setOnClickListener
             }

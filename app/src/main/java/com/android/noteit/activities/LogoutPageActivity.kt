@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 
 class LogoutPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class LogoutPageActivity : AppCompatActivity() {
             Toast.makeText(this, "See you next time!", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, LandingActivity::class.java)
-
+            AppManager.signout()
             //to close all previous activities
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

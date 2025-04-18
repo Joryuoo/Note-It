@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 //email validation import
 import android.util.Patterns
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 import com.android.noteit.managers.UserManager
 
 class SignupActivity : AppCompatActivity() {
@@ -36,6 +37,7 @@ class SignupActivity : AppCompatActivity() {
         val etUsername = findViewById<EditText>(R.id.editTextUsername)
         val etEmail = findViewById<EditText>(R.id.editTextEmail)
         val etPassword = findViewById<EditText>(R.id.editTextPassword)
+        val etConfirmPassword = findViewById<EditText>(R.id.editTextConfirmPassword)
         val btnSignup = findViewById<Button>(R.id.btn_sign_up)
         val btnSignin = findViewById<TextView>(R.id.btn_sign_in)
 
@@ -43,38 +45,45 @@ class SignupActivity : AppCompatActivity() {
             val username = etUsername.text.toString().trim()
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
-            val intent = Intent(this, SigninActivity::class.java)
+            val confirm = etConfirmPassword.text.toString().trim()
 
             if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
                 Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            } else if(!isValidEmail(email)){
+            } else if(username.length < 3){
+                Toast.makeText(this, "Username is too short", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else if(AppManager.find_username(username)){
+                Toast.makeText(this, "Username is already taken", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else if(!isValidEmail(email)){
                 Toast.makeText(this, "Invalid Email Address", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            } else if(password.length < 8){
+            } else if(AppManager.find_email(email)){
+                Toast.makeText(this, "Email is already taken", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else if(password.length < 8){
                 Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }
-
-            val message = UserManager.registerUser(username, email, password)
-
-            if(message == "Registration Successful!"){
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-                Log.e("Succ", "Registration Successful")
+            } else if(!password.equals(confirm)){
+                Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else{
+                AppManager.registerUser(username, email, confirm)
+                Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
+                Log.e("SigninActivity", "Registration Successful")
                 etUsername.text.clear()
                 etEmail.text.clear()
                 etPassword.text.clear()
+                etConfirmPassword.text.clear()
 
+                val intent = Intent(this, SigninActivity::class.java)
                 startActivity(intent)
-            } else{
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-                Log.e("ERROR", message)
-
             }
         }
 
         btnSignin.setOnClickListener {
-            Log.e("Cliable TextView button", "TextView is clicked")
+            Log.e("SigninActivity", "TextView is clicked : Signin")
             Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, SigninActivity::class.java)

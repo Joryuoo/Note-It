@@ -27,4 +27,11 @@
     <color name = "light_gray1">#C9C9C9</color>
     <color name = "light_gray2">#eeecec</color>
 
+    //bootstrap
+
+    <color name="dark">#212528</color>
+    <color name="success">#198855</color>
+    <color name="danger">#dc3544</color>
+    <color name="light">#f8fafb</color>
+
 </resources>
