@@ -1,5 +1,6 @@
 package com.android.noteit.activities
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.graphics.drawable.ColorDrawable
@@ -32,8 +33,12 @@ class EditProfileActivity : AppCompatActivity() {
 
     private val resultContract = registerForActivityResult(ActivityResultContracts.GetContent()){ result->
         if(result != null){
-            profilePicture.setImageURI(result)
-            AppManager.sessionUser?.profilepictureUri = result
+//            profilePicture.setImageURI(result)
+//            AppManager.sessionUser?.profilepictureUri = result
+
+            val savedUri = copyUriToInternalStorage(this, result)
+            AppManager.sessionUser?.profilepictureUri = savedUri
+            profilePicture.setImageURI(savedUri)
         }
     }
 
@@ -45,17 +50,28 @@ class EditProfileActivity : AppCompatActivity() {
         btnEditProfilePic = findViewById(R.id.btnChangeProfile)
         profilePicture = findViewById(R.id.profilePicture)
 
-        val oldUri = AppManager.sessionUser?.profilepictureUri
+        val oldUri: Uri? = AppManager.sessionUser?.profilepictureUri
 
         if (AppManager.sessionUser?.profilepictureUri == null) {
             profilePicture.setImageResource(R.drawable.profile_picture)
             Log.e("Profile", "uri is null")
         } else {
             Log.e("Profile", "Loading with glide")
-            Glide.with(this)
-                .load(AppManager.sessionUser?.profilepictureUri)
-                .placeholder(R.drawable.profile_picture)
-                .into(profilePicture)
+//            Glide.with(this)
+//                .load(AppManager.sessionUser?.profilepictureUri)
+//                .placeholder(R.drawable.profile_picture)
+//                .into(profilePicture)
+
+            val uri = AppManager.sessionUser?.profilepictureUri
+            if (uri != null) {
+                Glide.with(this)
+                    .load(uri)
+                    .placeholder(R.drawable.profile_picture)
+                    .into(profilePicture)
+            } else {
+                profilePicture.setImageResource(R.drawable.profile_picture)
+            }
+
         }
 
         val etUsername = findViewById<EditText>(R.id.editTextUsername)
@@ -83,8 +99,25 @@ class EditProfileActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this){
             val username = etUsername.text.toString().trim()
             val email = etEmail.text.toString().trim()
+            val safeUri =
+                oldUri?.let { it1 ->
+                    copyUriToInternalStorage(this@EditProfileActivity,
+                        it1
+                    )
+                }
 
-            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked){
+            val oldpassword = etOldPassword.text.toString().trim()
+            val newpassword = etNewPassword.text.toString().trim()
+            val confirmpassword = etConfirmPassword.text.toString().trim()
+
+            if(isChangePassClicked && oldpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty() &&
+                AppManager.sessionUser?.profilepictureUri == safeUri){
+                finish()
+                return@addCallback
+            }
+
+            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked ||
+                AppManager.sessionUser?.profilepictureUri != safeUri){
                 val msgtitle = "Unsaved Changes"
                 val msgContext = "Are you sure you want to go back without saving?"
 
@@ -108,7 +141,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 btnPositive.setOnClickListener {
-                    AppManager.sessionUser?.profilepictureUri = oldUri
+                    AppManager.sessionUser?.profilepictureUri = safeUri
                     finish()
                 }
 
@@ -122,8 +155,19 @@ class EditProfileActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             val username = etUsername.text.toString().trim()
             val email = etEmail.text.toString().trim()
+            val oldpassword = etOldPassword.text.toString().trim()
+            val newpassword = etNewPassword.text.toString().trim()
+            val confirmpassword = etConfirmPassword.text.toString().trim()
+            val safeUri = oldUri?.let { it1 -> copyUriToInternalStorage(this, it1) }
 
-            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked){
+            if(isChangePassClicked && oldpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty() &&
+                AppManager.sessionUser?.profilepictureUri == safeUri){
+                finish()
+                return@setOnClickListener
+            }
+
+            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked ||
+                AppManager.sessionUser?.profilepictureUri != safeUri){
                 val msgtitle = "Unsaved Changes"
                 val msgContext = "Are you sure you want to go back without saving?"
 
@@ -147,7 +191,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 btnPositive.setOnClickListener {
-                    AppManager.sessionUser?.profilepictureUri = oldUri
+                    AppManager.sessionUser?.profilepictureUri = safeUri
                     finish()
                 }
 
@@ -175,13 +219,12 @@ class EditProfileActivity : AppCompatActivity() {
             val confirmpassword = etConfirmPassword.text.toString().trim()
 
             if(!isChangePassClicked){
+
                 if(username == AppManager.sessionUser?.username && email == AppManager.sessionUser?.email){
                     finish()
                     return@setOnClickListener
                 }
-            }
 
-            if(!isChangePassClicked){
                 if(username.isEmpty() || email.isEmpty()){
                     if(username.isEmpty() && !email.isEmpty()){
                         Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show()
@@ -193,56 +236,74 @@ class EditProfileActivity : AppCompatActivity() {
                     return@setOnClickListener
                 } else if(username.length < 3){
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 }else if((AppManager.sessionUser?.username != username) && AppManager.find_username(username)){
                     Toast.makeText(this, "Username is already taken", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 }else if(!isValidEmail(email)){
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 } else if((AppManager.sessionUser?.email != email) && AppManager.find_email(email)){
                     Toast.makeText(this, "Email address is already taken", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 } else{
                     AppManager.sessionUser?.username = username
                     AppManager.sessionUser?.email = email
                     Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
                     finish()
+                }
+                return@setOnClickListener
+            } else{
+
+                if(AppManager.sessionUser?.username == username && AppManager.sessionUser!!.email == email &&
+                    oldpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty()){
+                    finish()
                     return@setOnClickListener
                 }
-            } else{
                 if(username.isEmpty() || email.isEmpty() || oldpassword.isEmpty() || newpassword.isEmpty() || confirmpassword.isEmpty()){
                     Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 } else if(username.length < 3){
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 }else if((AppManager.sessionUser?.username != username) && AppManager.find_username(username)){
                     Toast.makeText(this, "Username is already taken", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 }else if(!isValidEmail(email)){
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 } else if((AppManager.sessionUser?.email != email) && AppManager.find_email(email)){
                     Toast.makeText(this, "Email address is already taken", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 } else if(AppManager.sessionUser?.password != oldpassword){
                     Toast.makeText(this, "Invalid current password.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
                 } else if(newpassword != confirmpassword){
                     Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                } else{
+                } else if(newpassword.length < 8 || oldpassword.length < 8){
+                    Toast.makeText(this, "Passwords must be at least 8 characters long", Toast.LENGTH_SHORT).show()
+                } else if(oldpassword == newpassword){
+                    Toast.makeText(this, "New password must be different from the old password.", Toast.LENGTH_SHORT).show()
+                }else{
                     AppManager.sessionUser?.username = username
                     AppManager.sessionUser?.email = email
                     AppManager.sessionUser?.password = confirmpassword
                     Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
                     finish()
-                    return@setOnClickListener
                 }
+                return@setOnClickListener
             }
         }
     }
+
+    fun copyUriToInternalStorage(context: Context, uri: Uri): Uri? {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+            val file = File(context.filesDir, "profile_picture_${System.currentTimeMillis()}.jpg")
+            val outputStream = FileOutputStream(file)
+
+            inputStream.copyTo(outputStream)
+
+            inputStream.close()
+            outputStream.close()
+
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 
     fun isValidEmail(email: String): Boolean {
         return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()

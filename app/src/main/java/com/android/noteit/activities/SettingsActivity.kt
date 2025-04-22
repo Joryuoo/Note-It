@@ -31,6 +31,13 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+        val btnAboutApp = findViewById<LinearLayout>(R.id.about_note_it)
+        btnAboutApp.setOnClickListener {
+            Log.e("Developer Btn", "Clicked")
+            val intent = Intent(this, AboutAppActivity::class.java)
+            startActivity(intent)
+        }
+
         val btnDevelopers = findViewById<LinearLayout>(R.id.btn_developers)
         btnDevelopers.setOnClickListener{
             Log.e("Developer Btn", "Clicked")

@@ -152,7 +152,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Test Case Designer &amp; Mobile Developer of Note It"
+                    android:text="Developer &amp; Quality Assurance"
                     android:fontFamily="@font/ritam_sans_demibold"
                     android:textAlignment="center"
                     android:textSize="22sp"
