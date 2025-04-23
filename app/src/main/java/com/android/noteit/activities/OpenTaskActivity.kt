@@ -55,6 +55,7 @@ class OpenTaskActivity : AppCompatActivity() {
                         cbMarkAsDone.isChecked = !isChecked
                     } else {
                         updateTitleAppearance(isChecked)
+                        AppManager.saveAppData(this)
                     }
                 }
 
@@ -69,6 +70,7 @@ class OpenTaskActivity : AppCompatActivity() {
                     if(title.isNotEmpty()){
                         task.updateTask(title, desc, done)
                         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+                        AppManager.saveAppData(this)
                     }
                     finish()
                 }
@@ -102,6 +104,7 @@ class OpenTaskActivity : AppCompatActivity() {
                         AppManager.sessionUser?.taskList?.remove(task)
                         Log.d("OpenTaskActivity", "Delete button clicked for task ID: $taskId")
                         Toast.makeText(this, "Task deleted", Toast.LENGTH_SHORT).show()
+                        AppManager.saveAppData(this)
                         finish()
                     }
 
@@ -137,6 +140,7 @@ class OpenTaskActivity : AppCompatActivity() {
                             task.unArchiveTask()
                             Log.d("OpenTaskActivity", "Archive button clicked for task ID: $taskId")
                             Toast.makeText(this, "Task  unarchived", Toast.LENGTH_SHORT).show()
+                            AppManager.saveAppData(this)
                             finish()
                         }
 
@@ -169,6 +173,7 @@ class OpenTaskActivity : AppCompatActivity() {
                             task.addToArchive()
                             Log.d("OpenTaskActivity", "Archive button clicked for task ID: $taskId")
                             Toast.makeText(this, "Task  added to archive", Toast.LENGTH_SHORT).show()
+                            AppManager.saveAppData(this)
                             finish()
                         }
                         myDialog.show()

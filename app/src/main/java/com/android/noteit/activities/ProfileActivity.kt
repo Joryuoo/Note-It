@@ -108,5 +108,10 @@ class ProfileActivity : AppCompatActivity() {
         email.text = AppManager.sessionUser?.email
     }
 
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(this)  // Save data when the activity is paused
+    }
+
 
 }

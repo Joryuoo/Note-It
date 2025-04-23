@@ -9,8 +9,13 @@ class UserModel {
     var username = ""
     var email = ""
     var password = ""
-    var profilepictureUri: Uri?= null
+
+    // Store the Uri as a string for GSON compatibility
     var profilePicturePath: String? = null
+
+    // Accessor for Uri
+    val profilepictureUri: Uri?
+        get() = profilePicturePath?.let { Uri.parse(it) }
 
     //Unique list of notes for individual users
     var noteList = ArrayList<NoteModel>()
@@ -22,8 +27,8 @@ class UserModel {
         this.password = password
     }
 
-    fun changeProfilePicture(imageId: Uri){
-        profilepictureUri = imageId
+    fun changeProfilePicture(imageUri: Uri?) {
+        profilePicturePath = imageUri?.toString()
     }
 
     fun updateUsername(username: String){

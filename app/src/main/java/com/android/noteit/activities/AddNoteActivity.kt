@@ -62,7 +62,9 @@ class AddNoteActivity : AppCompatActivity() {
             } else {
                 // Add new note
                 AppManager.sessionUser?.noteList?.add(0, NoteModel(finalTitle, finalContent))
+
             }
+            AppManager.saveAppData(this)
 
             val resultIntent = Intent()
             resultIntent.putExtra("isNoteAdded", true)
@@ -74,6 +76,7 @@ class AddNoteActivity : AppCompatActivity() {
 //            NoteManager.notes.indices
             if(AppManager.sessionUser?.noteList?.indices?.contains(noteIndex) == true){
                 AppManager.sessionUser?.noteList?.removeAt(noteIndex!!)
+                AppManager.saveAppData(this)
                 finish()
             } else{
                 finish()
@@ -88,5 +91,10 @@ class AddNoteActivity : AppCompatActivity() {
                 false
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(this)  // Save data when the activity is paused
     }
 }

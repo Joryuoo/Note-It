@@ -10,6 +10,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/titleHeader"
+            android:text="Todos"
+            android:textSize="22sp"
+            android:fontFamily="@font/ritam_sans_bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="15dp"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/todolist_recyclerview"
             android:layout_width="match_parent"

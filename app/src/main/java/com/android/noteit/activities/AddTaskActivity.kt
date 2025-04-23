@@ -28,6 +28,7 @@ class AddTaskActivity : AppCompatActivity() {
             if(title.isNotEmpty()){
                 AppManager.sessionUser?.taskList?.add(0, TodoListModel(title, desc))
                 Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+                AppManager.saveAppData(this)
                 finish()
             } else{
                 Toast.makeText(this, "Task title cannot be empty", Toast.LENGTH_SHORT).show()
@@ -41,5 +42,10 @@ class AddTaskActivity : AppCompatActivity() {
         btnCancel.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(this)  // Save data when the activity is paused
     }
 }

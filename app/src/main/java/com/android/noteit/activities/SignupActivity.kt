@@ -69,7 +69,7 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             } else{
-                AppManager.registerUser(username, email, confirm)
+                AppManager.registerUser(username, email, confirm, this)
                 Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
                 Log.e("SigninActivity", "Registration Successful")
                 etUsername.text.clear()

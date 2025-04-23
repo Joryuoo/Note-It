@@ -46,6 +46,7 @@ class OpenNoteActivity : AppCompatActivity() {
                 } else{
                     note.updateNote(title, content)
                     Toast.makeText(this, "Changes saved", Toast.LENGTH_SHORT).show()
+                    AppManager.saveAppData(this)
                     finish()
                 }
             }
@@ -81,6 +82,7 @@ class OpenNoteActivity : AppCompatActivity() {
                     btnPositive.setOnClickListener {
                         note.unArchiveNote()
                         Toast.makeText(this, "Note unarchived", Toast.LENGTH_SHORT).show()
+                        AppManager.saveAppData(this)
                         finish()
                     }
 
@@ -112,6 +114,7 @@ class OpenNoteActivity : AppCompatActivity() {
                     btnPositive.setOnClickListener {
                         note.archiveNote()
                         Toast.makeText(this, "Note added to archive", Toast.LENGTH_SHORT).show()
+                        AppManager.saveAppData(this)
                         finish()
                     }
 
@@ -148,6 +151,7 @@ class OpenNoteActivity : AppCompatActivity() {
                 btnPositive.setOnClickListener {
                     AppManager.sessionUser?.deleteNote(note)
                     Toast.makeText(this, "Note deleted", Toast.LENGTH_SHORT).show()
+                    AppManager.saveAppData(this)
                     finish()
                 }
 

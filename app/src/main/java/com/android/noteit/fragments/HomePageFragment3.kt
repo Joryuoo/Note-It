@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 import com.android.noteit.managers.TaskModel
 
 class HomePageFragment3 : Fragment(R.layout.fragment_home_page3) {
@@ -86,5 +87,10 @@ class HomePageFragment3 : Fragment(R.layout.fragment_home_page3) {
         button.layoutParams = params
 
         ViewCompat.setBackgroundTintList(button, color)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(requireContext())  // Save data when the activity is paused
     }
 }

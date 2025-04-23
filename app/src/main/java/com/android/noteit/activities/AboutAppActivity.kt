@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 
 class AboutAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,5 +20,10 @@ class AboutAppActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(this)  // Save data when the activity is paused
     }
 }

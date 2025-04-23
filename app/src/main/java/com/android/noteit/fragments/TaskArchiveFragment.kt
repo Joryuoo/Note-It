@@ -102,4 +102,9 @@ class TaskArchiveFragment : Fragment(R.layout.fragment_task_archive) {
             }
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(requireContext())  // Save data when the activity is paused
+    }
 }

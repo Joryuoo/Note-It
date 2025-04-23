@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 
 class LandingActivity : AppCompatActivity() {
 
@@ -38,6 +39,15 @@ class LandingActivity : AppCompatActivity() {
         setContentView(R.layout.landing_page)
         supportActionBar?.hide()
 
+        AppManager.loadAppData(this)
+
+        if(AppManager.sessionUser  != null){
+            startActivity(Intent(this, HomepageActivity::class.java))
+            finish()
+        } else{
+            Log.d("Landing", "No session user")
+        }
+
         val btnGetStarted = findViewById<Button>(R.id.get_started_btn);
 
         btnGetStarted.setOnClickListener{
@@ -59,6 +69,11 @@ class LandingActivity : AppCompatActivity() {
             val intent = Intent(this, SigninActivity::class.java)
             startActivity((intent))
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(this)  // Save data when the activity is paused
     }
 
 }

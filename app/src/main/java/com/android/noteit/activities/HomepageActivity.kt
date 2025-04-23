@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
+import com.android.noteit.app.AppManager
 import com.android.noteit.fragments.HomePageFragment1
 import com.android.noteit.fragments.HomePageFragment2
 import com.android.noteit.fragments.HomePageFragment3
@@ -92,5 +93,10 @@ class HomepageActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(this)  // Save data when the activity is paused
     }
 }

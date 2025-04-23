@@ -71,4 +71,9 @@ class NotesArchiveFragment : Fragment(R.layout.fragment_notes_archive) {
             }
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(requireContext())  // Save data when the activity is paused
+    }
 }

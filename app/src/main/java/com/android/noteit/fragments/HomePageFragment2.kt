@@ -67,6 +67,7 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
                     Log.e("HomePageFragment2", "Failed to update task: ${item.title}")
                 } else {
                     Log.d("HomePageFragment2", "Task status updated successfully for: ${item.title}")
+                    AppManager.saveAppData(requireContext())
                 }
             },
 
@@ -105,4 +106,10 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
             Log.w("HomePageFragment2", "Adapter not initialized in onResume")
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(requireContext())  // Save data when the activity is paused
+    }
+
 }

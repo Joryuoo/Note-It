@@ -84,4 +84,9 @@ class HomePageFragment1 : Fragment(R.layout.fragment_home_page1) {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        AppManager.saveAppData(requireContext())  // Save data when the activity is paused
+    }
+
 }

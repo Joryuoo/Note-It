@@ -47,12 +47,15 @@ class SigninActivity : AppCompatActivity() {
             }else if(username.length < 3){
                 Toast.makeText(this, "Username is too short", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            } else if(password.length < 8){
+            } else if(!AppManager.find_username(username)){
+                Toast.makeText(this, "Username not found", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }else if(password.length < 8){
                 Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val login = AppManager.signin(username, password)
+            val login = AppManager.signin(username, password, this)
 
             if(login){
                 Toast.makeText(this, "Log in Successful", Toast.LENGTH_SHORT).show()

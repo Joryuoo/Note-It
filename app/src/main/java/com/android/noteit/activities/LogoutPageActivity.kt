@@ -33,6 +33,7 @@ class LogoutPageActivity : AppCompatActivity() {
 
             val intent = Intent(this, LandingActivity::class.java)
             AppManager.signout()
+            AppManager.saveAppData(this)
             //to close all previous activities
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -45,4 +46,6 @@ class LogoutPageActivity : AppCompatActivity() {
             finish()
         }
     }
+
+
 }

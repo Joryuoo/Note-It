@@ -30,6 +30,7 @@ import java.io.FileOutputStream
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var profilePicture: de.hdodenhof.circleimageview.CircleImageView
     private lateinit var btnEditProfilePic: ImageButton
+    private var isProfileChanged: Boolean = false
 
     private val resultContract = registerForActivityResult(ActivityResultContracts.GetContent()){ result->
         if(result != null){
@@ -37,8 +38,9 @@ class EditProfileActivity : AppCompatActivity() {
 //            AppManager.sessionUser?.profilepictureUri = result
 
             val savedUri = copyUriToInternalStorage(this, result)
-            AppManager.sessionUser?.profilepictureUri = savedUri
+            AppManager.sessionUser?.changeProfilePicture(savedUri)
             profilePicture.setImageURI(savedUri)
+            isProfileChanged = true
         }
     }
 
@@ -111,13 +113,12 @@ class EditProfileActivity : AppCompatActivity() {
             val confirmpassword = etConfirmPassword.text.toString().trim()
 
             if(isChangePassClicked && oldpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty() &&
-                AppManager.sessionUser?.profilepictureUri == safeUri){
+                !isProfileChanged){
                 finish()
                 return@addCallback
             }
 
-            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked ||
-                AppManager.sessionUser?.profilepictureUri != safeUri){
+            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked || isProfileChanged){
                 val msgtitle = "Unsaved Changes"
                 val msgContext = "Are you sure you want to go back without saving?"
 
@@ -141,7 +142,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 btnPositive.setOnClickListener {
-                    AppManager.sessionUser?.profilepictureUri = safeUri
+                    AppManager.sessionUser?.changeProfilePicture(safeUri)
                     finish()
                 }
 
@@ -161,13 +162,13 @@ class EditProfileActivity : AppCompatActivity() {
             val safeUri = oldUri?.let { it1 -> copyUriToInternalStorage(this, it1) }
 
             if(isChangePassClicked && oldpassword.isEmpty() && newpassword.isEmpty() && confirmpassword.isEmpty() &&
-                AppManager.sessionUser?.profilepictureUri == safeUri){
+                !isProfileChanged){
                 finish()
                 return@setOnClickListener
             }
 
-            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked ||
-                AppManager.sessionUser?.profilepictureUri != safeUri){
+            if(username != AppManager.sessionUser?.username || email != AppManager.sessionUser?.email || isChangePassClicked || isProfileChanged){
+
                 val msgtitle = "Unsaved Changes"
                 val msgContext = "Are you sure you want to go back without saving?"
 
@@ -186,21 +187,32 @@ class EditProfileActivity : AppCompatActivity() {
                 title.setText(msgtitle)
                 context.setText(msgContext)
 
+                // Handle negative button click
                 btnNegative.setOnClickListener {
                     myDialog.dismiss()
                 }
 
+                // Handle positive button click (confirm exit)
                 btnPositive.setOnClickListener {
-                    AppManager.sessionUser?.profilepictureUri = safeUri
-                    finish()
+                    AppManager.sessionUser?.changeProfilePicture(safeUri)
+                    if (!isFinishing) {
+                        finish() // Ensure it's called only if the activity is not finishing
+                    }
                 }
 
-                myDialog.show()
-            } else{
-                finish()
-                return@setOnClickListener
+                // Show dialog
+                if (!isFinishing) {
+                    myDialog.show()
+                }
+            } else {
+                // If no changes, just finish the activity
+                if (!isFinishing) {
+                    finish()
+                }
             }
         }
+
+
 
         btnChangePassword.setOnClickListener {
             enableEditText(etOldPassword)
@@ -246,6 +258,8 @@ class EditProfileActivity : AppCompatActivity() {
                     AppManager.sessionUser?.username = username
                     AppManager.sessionUser?.email = email
                     Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
+
+                    AppManager.saveAppData(this)
                     finish()
                 }
                 return@setOnClickListener
@@ -279,6 +293,9 @@ class EditProfileActivity : AppCompatActivity() {
                     AppManager.sessionUser?.email = email
                     AppManager.sessionUser?.password = confirmpassword
                     Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show()
+
+                    AppManager.saveAppData(this)
+
                     finish()
                 }
                 return@setOnClickListener

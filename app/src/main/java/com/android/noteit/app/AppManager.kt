@@ -1,9 +1,15 @@
 package com.android.noteit.app
 
+import android.content.Context
 import android.util.Log
 import com.android.noteit.datamodels.NoteModel
 import com.android.noteit.datamodels.TodoListModel
 import com.android.noteit.datamodels.UserModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 object AppManager {
     //Users
@@ -21,7 +27,7 @@ object AppManager {
     }
 
 
-    fun registerUser(username: String, email:String, password: String){
+    fun registerUser(username: String, email:String, password: String, context: Context){
         var newUser: UserModel = UserModel(username, email, password)
         newUser.noteList.add(
             NoteModel(
@@ -30,9 +36,10 @@ object AppManager {
             )
         )
         registeredUsers.add(newUser)
+        saveAppData(context)
     }
 
-    fun signin(username: String, password: String): Boolean{
+    fun signin(username: String, password: String, context: Context): Boolean{
         if(registeredUsers.any{it.username == username && it.password == password}){
             sessionUser = registeredUsers.find { it.username == username && it.password == password }
             return true
@@ -101,5 +108,52 @@ object AppManager {
             false // Indicate failure
         }
     }
-    
+
+    //GSON functions
+
+    // Gson instance for serialization and deserialization
+    private val gson = Gson()
+
+    // Save App Data to a file
+    fun saveAppData(context: Context) {
+        Log.d("saveAppData", "Called")
+        try {
+            val file = File(context.filesDir, "app_data.json")
+            val appData = AppData(sessionUser, registeredUsers)  // Create AppData wrapper
+            val json = gson.toJson(appData)                      // Serialize AppData instead of AppManager
+            FileOutputStream(file).use { outputStream ->
+                outputStream.write(json.toByteArray())
+            }
+            Log.d("AppManager", "App data saved successfully.")
+        } catch (e: Exception) {
+            Log.e("AppManager", "Failed to save app data: ${e.message}")
+        }
+    }
+
+    fun loadAppData(context: Context) {
+        try {
+            val file = File(context.filesDir, "app_data.json")
+            if (!file.exists()) {
+                Log.d("AppManager", "No saved file found. Skipping load.")
+                return
+            }
+
+            val json = file.readText()
+            val wrapperType = object : TypeToken<AppData>() {}.type
+            val loadedData: AppData = gson.fromJson(json, wrapperType)
+
+            this.sessionUser = loadedData.sessionUser
+            this.registeredUsers = loadedData.registeredUsers
+
+            Log.d("AppManager", "App data loaded successfully.")
+        } catch (e: IOException) {
+            Log.e("AppManager", "Failed to load app data: ${e.message}")
+        } catch (e: Exception) {
+            Log.e("AppManager", "Unexpected error while loading app data: ${e.message}")
+        }
+    }
+
+
+
+
 }
