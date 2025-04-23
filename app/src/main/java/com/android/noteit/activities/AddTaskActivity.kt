@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
@@ -35,6 +36,23 @@ class AddTaskActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+        }
+
+        onBackPressedDispatcher.addCallback(this){
+            val title = tvTitle.text.toString().trim()
+            var desc = tvDescription.text.toString().trim()
+
+            if(desc.isEmpty()) desc = ""
+
+            if(title.isNotEmpty()){
+                AppManager.sessionUser?.taskList?.add(0, TodoListModel(title, desc))
+                Toast.makeText(this@AddTaskActivity, "Saved", Toast.LENGTH_SHORT).show()
+                AppManager.saveAppData(this@AddTaskActivity)
+                finish()
+            } else{
+                Toast.makeText(this@AddTaskActivity, "Task title cannot be empty", Toast.LENGTH_SHORT).show()
+                return@addCallback
+            }
         }
 
         val btnCancel = findViewById<ImageButton>(R.id.btnCancel)

@@ -105,25 +105,46 @@
         android:textColorHint="@color/gray"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:overScrollMode="always"
+        android:scrollbars="horizontal"
+        android:textIsSelectable="true"
+        android:longClickable="true"
         app:layout_constraintTop_toBottomOf="@id/markAsDone"
         android:imeOptions="actionDone"
         />
 
-    <EditText
-        android:id="@+id/et_Content"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:hint="Description (Optional)"
-        android:textSize="16sp"
-        android:textColorHint="@color/gray"
-        android:textColor="@color/black"
-        android:fontFamily="@font/ritam_sans_medium"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/et_Title"
-        android:imeOptions="actionDone" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        >
+
+        <EditText
+            android:id="@+id/et_Content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:hint="Description (Optional)"
+            android:textSize="16sp"
+            android:inputType="textMultiLine"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            android:fontFamily="@font/ritam_sans_medium"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:textIsSelectable="true"
+            android:longClickable="true"
+            android:imeOptions="actionDone" />
+
+    </ScrollView>
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

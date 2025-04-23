@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
@@ -27,6 +28,7 @@ class OpenTaskActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageButton
     private lateinit var btnDelete: ImageButton
     private lateinit var btnArchive: ImageButton
+    private lateinit var task: TodoListModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,7 @@ class OpenTaskActivity : AppCompatActivity() {
 
         if (taskId != null) {
             Log.d("OpenTaskActivity", "Received Task ID: $taskId")
-            val task = AppManager.getTaskById(taskId)
+            task = AppManager.getTaskById(taskId)!!
             if (task != null) {
                 displayTaskDetails(task)
                 cbMarkAsDone.setOnCheckedChangeListener { _, isChecked ->
@@ -60,7 +62,6 @@ class OpenTaskActivity : AppCompatActivity() {
                 }
 
                 btnBack.setOnClickListener {
-
                     val title = etTaskTitle.text.toString().trim()
                     var desc = etTaskDescription.text.toString().trim()
                     val done = cbMarkAsDone.isChecked
@@ -71,6 +72,21 @@ class OpenTaskActivity : AppCompatActivity() {
                         task.updateTask(title, desc, done)
                         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
                         AppManager.saveAppData(this)
+                    }
+                    finish()
+                }
+
+                onBackPressedDispatcher.addCallback(this){
+                    val title = etTaskTitle.text.toString().trim()
+                    var desc = etTaskDescription.text.toString().trim()
+                    val done = cbMarkAsDone.isChecked
+
+                    if(desc.isEmpty()) desc = ""
+
+                    if(title.isNotEmpty()){
+                        task.updateTask(title, desc, done)
+                        Toast.makeText(this@OpenTaskActivity, "Saved", Toast.LENGTH_SHORT).show()
+                        AppManager.saveAppData(this@OpenTaskActivity)
                     }
                     finish()
                 }
@@ -206,5 +222,23 @@ class OpenTaskActivity : AppCompatActivity() {
         } else {
             etTaskTitle.paintFlags = etTaskTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val title = etTaskTitle.text.toString().trim()
+        var desc = etTaskDescription.text.toString().trim()
+        val done = cbMarkAsDone.isChecked
+
+        if (desc.isEmpty()) desc = ""
+
+        if (title.isNotEmpty()) {
+            task.updateTask(title, desc, done)
+            Toast.makeText(this@OpenTaskActivity, "Saved", Toast.LENGTH_SHORT).show()
+            AppManager.saveAppData(this@OpenTaskActivity)
+        }
+
+        AppManager.saveAppData(this)
     }
 }

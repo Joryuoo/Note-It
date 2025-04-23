@@ -1,8 +1,10 @@
 package com.android.noteit.activities
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -13,8 +15,12 @@ import com.android.noteit.app.AppManager
 import com.android.noteit.fragments.HomePageFragment1
 import com.android.noteit.fragments.HomePageFragment2
 import com.android.noteit.fragments.HomePageFragment3
+import com.bumptech.glide.Glide
+import java.io.File
+import java.io.FileOutputStream
 
 class HomepageActivity : AppCompatActivity() {
+    lateinit var btnProfile: de.hdodenhof.circleimageview.CircleImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
@@ -35,6 +41,24 @@ class HomepageActivity : AppCompatActivity() {
         val homeFragment = HomePageFragment1()
         val notesFragment = HomePageFragment2()
         val taskFragment = HomePageFragment3()
+        btnProfile = findViewById(R.id.btnProfileIcon)
+
+        if (AppManager.sessionUser?.profilepictureUri == null) {
+            btnProfile.setImageResource(R.drawable.ic_profile_icon)
+            Log.e("Profile", "uri is null")
+        } else {
+            Log.e("Homepage", "Loading with glide")
+
+            val uri = AppManager.sessionUser?.profilepictureUri
+            if (uri != null) {
+                Glide.with(this)
+                    .load(uri)
+                    .placeholder(R.drawable.ic_profile_icon)
+                    .into(btnProfile)
+            } else {
+                btnProfile.setImageResource(R.drawable.ic_profile_icon)
+            }
+        }
 
 
         btnHome.setImageResource(R.drawable.selected_home_icon)
@@ -84,7 +108,7 @@ class HomepageActivity : AppCompatActivity() {
         }
 
 
-        val btnProfile = findViewById<Button>(R.id.btnProfileIcon)
+
 
         btnProfile.setOnClickListener {
             Log.e("Homepage", "Profile icon clicked")
@@ -93,6 +117,45 @@ class HomepageActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun copyUriToInternalStorage(context: Context, uri: Uri): Uri? {
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+            val file = File(context.filesDir, "profile_picture_${System.currentTimeMillis()}.jpg")
+            val outputStream = FileOutputStream(file)
+
+            inputStream.copyTo(outputStream)
+
+            inputStream.close()
+            outputStream.close()
+
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (AppManager.sessionUser?.profilepictureUri == null) {
+            btnProfile.setImageResource(R.drawable.ic_profile_icon)
+            Log.e("Profile", "uri is null")
+        } else {
+            Log.e("Homepage", "Loading with glide")
+
+            val uri = AppManager.sessionUser?.profilepictureUri
+            if (uri != null) {
+                Glide.with(this)
+                    .load(uri)
+                    .placeholder(R.drawable.ic_profile_icon)
+                    .into(btnProfile)
+            } else {
+                btnProfile.setImageResource(R.drawable.ic_profile_icon)
+            }
+        }
     }
 
     override fun onPause() {

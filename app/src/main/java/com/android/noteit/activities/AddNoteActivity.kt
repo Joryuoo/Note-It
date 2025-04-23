@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
@@ -41,6 +43,40 @@ class AddNoteActivity : AppCompatActivity() {
             }
         }
 
+        //for phone navigation back button
+        onBackPressedDispatcher.addCallback(this){
+            val title = etTitle.text.toString().trim()
+            val content = etNote.text.toString().trim()
+
+            if (title.isEmpty() && content.isEmpty()) {
+                finish() // Dili mu save og note na empty
+                return@addCallback
+            }
+
+            val finalTitle = if (title.isEmpty()) "Untitled" else title // if walay title then set it to "untitled"
+            val finalContent = content // i set ra ang content bisag way sud
+
+//            if noteIndex != -1 meaning ang note kay gi load ra from existing note na stored sa data class
+            if (noteIndex != -1) {
+                var note = AppManager.sessionUser?.noteList?.get(noteIndex!!)
+                if (note != null) {
+                    note.updateNote(finalTitle, finalContent)
+                }
+            } else {
+                // Add new note
+                AppManager.sessionUser?.noteList?.add(0, NoteModel(finalTitle, finalContent))
+
+            }
+
+            Toast.makeText(this@AddNoteActivity, "Saved", Toast.LENGTH_SHORT).show()
+            AppManager.saveAppData(this@AddNoteActivity)
+
+            val resultIntent = Intent()
+            resultIntent.putExtra("isNoteAdded", true)
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        }
+
         btnBack.setOnClickListener {
             val title = etTitle.text.toString().trim()
             val content = etNote.text.toString().trim()
@@ -64,6 +100,8 @@ class AddNoteActivity : AppCompatActivity() {
                 AppManager.sessionUser?.noteList?.add(0, NoteModel(finalTitle, finalContent))
 
             }
+
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
             AppManager.saveAppData(this)
 
             val resultIntent = Intent()

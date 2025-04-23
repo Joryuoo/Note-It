@@ -33,13 +33,18 @@
         app:layout_constraintBottom_toBottomOf="@id/noteItText"
         />
 
-    <Button
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id = "@+id/btnProfileIcon"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/black"
         android:layout_marginTop="13dp"
         android:layout_marginRight="21dp"
-        android:background="@drawable/ic_profile_icon"
+        android:src="@drawable/ic_profile_icon"
+        android:background="@drawable/shape_circle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />

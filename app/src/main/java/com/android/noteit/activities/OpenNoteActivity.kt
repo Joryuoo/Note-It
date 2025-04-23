@@ -8,14 +8,19 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
+import com.android.noteit.datamodels.NoteModel
 
 class OpenNoteActivity : AppCompatActivity() {
+    private lateinit var note: NoteModel
+    private lateinit var etTitle: EditText
+    private lateinit var etNote: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_note)
@@ -23,30 +28,52 @@ class OpenNoteActivity : AppCompatActivity() {
         val btnDelete = findViewById<ImageButton>(R.id.btnDelete)
         val btnArchive = findViewById<ImageButton>(R.id.archive)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
-        val etTitle = findViewById<EditText>(R.id.et_Title)
-        val etNote = findViewById<EditText>(R.id.et_Content)
+        etTitle = findViewById(R.id.et_Title)
+        etNote = findViewById(R.id.et_Content)
 
         val position = intent.getIntExtra("position", -1)
 
-        val note = AppManager.sessionUser?.noteList?.get(position)
+        note = AppManager.sessionUser?.noteList?.get(position)!!
 
         if(position != -1){
             if (note != null) {
                 etTitle.setText(note.title)
                 etNote.setText(note.content)
+
+                if(note.title == "Untitled"){
+                    etTitle.setText("")
+                }
             }
         }
 
         btnBack.setOnClickListener {
-            val title = etTitle.text.toString()
+            var title = etTitle.text.toString()
             val content = etNote.text.toString()
             if (note != null) {
+                if(title.isEmpty()) title = "Untitled"
                 if(note.title == title && note.content == content){
                     finish()
                 } else{
                     note.updateNote(title, content)
                     Toast.makeText(this, "Changes saved", Toast.LENGTH_SHORT).show()
                     AppManager.saveAppData(this)
+                    finish()
+                }
+            }
+            finish()
+        }
+
+        onBackPressedDispatcher.addCallback(this){
+            var title = etTitle.text.toString()
+            val content = etNote.text.toString()
+            if (note != null) {
+                if(title.isEmpty()) title = "Untitled"
+                if(note.title == title && note.content == content){
+                    finish()
+                } else{
+                    note.updateNote(title, content)
+                    Toast.makeText(this@OpenNoteActivity, "Changes saved", Toast.LENGTH_SHORT).show()
+                    AppManager.saveAppData(this@OpenNoteActivity)
                     finish()
                 }
             }

@@ -17,6 +17,7 @@
         android:id="@+id/taskTitle"
         android:layout_width="0dp"
         android:maxLines="2"
+        android:ellipsize="end"
         android:layout_height="wrap_content"
         android:text="Lorem ipsum dolor sit amet."
         android:fontFamily="@font/ritam_sans_bold"
