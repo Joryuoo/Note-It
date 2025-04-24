@@ -12,7 +12,6 @@ import com.android.noteit.app.AppManager
 class AboutDeveloperActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.developers_page)
 
         //        screen orientation

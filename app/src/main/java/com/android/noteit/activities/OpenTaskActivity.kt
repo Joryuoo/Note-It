@@ -1,5 +1,7 @@
 package com.android.noteit.activities
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
@@ -9,6 +11,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -34,6 +37,16 @@ class OpenTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_task)
 
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
 
         etTaskTitle = findViewById(R.id.et_Title)
         etTaskDescription = findViewById(R.id.et_Content)
@@ -49,6 +62,13 @@ class OpenTaskActivity : AppCompatActivity() {
             Log.d("OpenTaskActivity", "Received Task ID: $taskId")
             task = AppManager.getTaskById(taskId)!!
             if (task != null) {
+
+                if(task.isArchived){
+                    btnArchive.setImageResource(R.drawable.svg_unarchive)
+                } else{
+                    btnArchive.setImageResource(R.drawable.baseline_archive_24)
+                }
+
                 displayTaskDetails(task)
                 cbMarkAsDone.setOnCheckedChangeListener { _, isChecked ->
                     val success = AppManager.updateTaskCompletionStatus(taskId, isChecked)
@@ -66,14 +86,26 @@ class OpenTaskActivity : AppCompatActivity() {
                     var desc = etTaskDescription.text.toString().trim()
                     val done = cbMarkAsDone.isChecked
 
+                    if(title.isEmpty()){
+                        Toast.makeText(this, "Oops! Don’t forget to add a title.", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+
                     if(desc.isEmpty()) desc = ""
 
-                    if(title.isNotEmpty()){
+                    if(task.title == title && task.description == desc && task.isDone == done){
+                        finish()
+                        return@setOnClickListener
+                    }
+
+                    if((task.title != title && title.isNotEmpty()) || task.description != desc || task.isDone != done){
                         task.updateTask(title, desc, done)
                         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
                         AppManager.saveAppData(this)
+                        finish()
                     }
-                    finish()
+                    return@setOnClickListener
+
                 }
 
                 onBackPressedDispatcher.addCallback(this){
@@ -81,14 +113,26 @@ class OpenTaskActivity : AppCompatActivity() {
                     var desc = etTaskDescription.text.toString().trim()
                     val done = cbMarkAsDone.isChecked
 
+                    if(title.isEmpty()){
+                        Toast.makeText(this@OpenTaskActivity, "Oops! Don’t forget to add a title.", Toast.LENGTH_SHORT).show()
+                        return@addCallback
+                    }
+
                     if(desc.isEmpty()) desc = ""
 
-                    if(title.isNotEmpty()){
+                    if(task.title == title && task.description == desc && task.isDone == done){
+                        finish()
+                        return@addCallback
+                    }
+
+                    if((task.title != title && title.isNotEmpty()) || task.description != desc || task.isDone != done){
                         task.updateTask(title, desc, done)
                         Toast.makeText(this@OpenTaskActivity, "Saved", Toast.LENGTH_SHORT).show()
                         AppManager.saveAppData(this@OpenTaskActivity)
+                        finish()
                     }
-                    finish()
+                    return@addCallback
+
                 }
 
 
@@ -121,6 +165,7 @@ class OpenTaskActivity : AppCompatActivity() {
                         Log.d("OpenTaskActivity", "Delete button clicked for task ID: $taskId")
                         Toast.makeText(this, "Task deleted", Toast.LENGTH_SHORT).show()
                         AppManager.saveAppData(this)
+                        myDialog.dismiss()
                         finish()
                     }
 
@@ -157,6 +202,7 @@ class OpenTaskActivity : AppCompatActivity() {
                             Log.d("OpenTaskActivity", "Archive button clicked for task ID: $taskId")
                             Toast.makeText(this, "Task  unarchived", Toast.LENGTH_SHORT).show()
                             AppManager.saveAppData(this)
+                            myDialog.dismiss()
                             finish()
                         }
 
@@ -190,6 +236,7 @@ class OpenTaskActivity : AppCompatActivity() {
                             Log.d("OpenTaskActivity", "Archive button clicked for task ID: $taskId")
                             Toast.makeText(this, "Task  added to archive", Toast.LENGTH_SHORT).show()
                             AppManager.saveAppData(this)
+                            myDialog.dismiss()
                             finish()
                         }
                         myDialog.show()
@@ -231,14 +278,24 @@ class OpenTaskActivity : AppCompatActivity() {
         var desc = etTaskDescription.text.toString().trim()
         val done = cbMarkAsDone.isChecked
 
-        if (desc.isEmpty()) desc = ""
-
-        if (title.isNotEmpty()) {
-            task.updateTask(title, desc, done)
-            Toast.makeText(this@OpenTaskActivity, "Saved", Toast.LENGTH_SHORT).show()
-            AppManager.saveAppData(this@OpenTaskActivity)
+        if(title.isEmpty()){
+            Toast.makeText(this, "Oops! Don’t forget to add a title.", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        AppManager.saveAppData(this)
+        if(desc.isEmpty()) desc = ""
+
+        if(task.title == title && task.description == desc && task.isDone == done){
+            finish()
+            return
+        }
+
+        if((task.title != title && title.isNotEmpty()) || task.description != desc || task.isDone != done){
+            task.updateTask(title, desc, done)
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+            AppManager.saveAppData(this)
+            finish()
+        }
+        return
     }
 }

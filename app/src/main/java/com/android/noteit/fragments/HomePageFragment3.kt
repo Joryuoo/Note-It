@@ -6,16 +6,12 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
-import com.android.noteit.managers.TaskModel
+
 
 class HomePageFragment3 : Fragment(R.layout.fragment_home_page3) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -23,11 +19,8 @@ class HomePageFragment3 : Fragment(R.layout.fragment_home_page3) {
 
         val btnNotesArchive = view.findViewById<Button>(R.id.notesArchive)
         val btnTodosArchive =  view.findViewById<Button>(R.id.taskArchive)
-//        val flFragment = view.findViewById<FrameLayout>(R.id.flArchiveFragment)
-
         val archiveNotesFragment = NotesArchiveFragment()
         val archiveTaskFragment = TaskArchiveFragment()
-
         val defaultColorStateList = ContextCompat.getColorStateList(requireContext(), R.color.gray)
         val toggledColorStateList = ContextCompat.getColorStateList(requireContext(), R.color.dark_blue)
 
@@ -35,8 +28,8 @@ class HomePageFragment3 : Fragment(R.layout.fragment_home_page3) {
             if (toggledColorStateList != null) { toggleButton(btnNotesArchive, toggledColorStateList) }
             if (defaultColorStateList != null) { unToggleButton(btnTodosArchive, defaultColorStateList) }
 
-            childFragmentManager.beginTransaction().apply { // Use childFragmentManager
-                replace(R.id.flArchiveFragment, archiveNotesFragment) // Use the created instance
+            childFragmentManager.beginTransaction().apply {
+                replace(R.id.flArchiveFragment, archiveNotesFragment)
                 addToBackStack("notes archive")
                 commit()
             }
@@ -46,15 +39,15 @@ class HomePageFragment3 : Fragment(R.layout.fragment_home_page3) {
             if (toggledColorStateList != null) { toggleButton(btnTodosArchive, toggledColorStateList) }
             if (defaultColorStateList != null) { unToggleButton(btnNotesArchive, defaultColorStateList) }
 
-            childFragmentManager.beginTransaction().apply { // Use childFragmentManager
-                replace(R.id.flArchiveFragment, archiveTaskFragment) // Use the created instance
+            childFragmentManager.beginTransaction().apply {
+                replace(R.id.flArchiveFragment, archiveTaskFragment)
                 addToBackStack("todo archive")
                 commit()
             }
         }
 
-        childFragmentManager.beginTransaction().apply { // Use childFragmentManager
-            replace(R.id.flArchiveFragment, archiveNotesFragment) // Use the created instance
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.flArchiveFragment, archiveNotesFragment)
             commit()
         }
 

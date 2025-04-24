@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/titleHeader"
-            android:text="Todos"
+            android:text="To-Do"
             android:textSize="22sp"
             android:fontFamily="@font/ritam_sans_bold"
             android:textColor="@color/black"

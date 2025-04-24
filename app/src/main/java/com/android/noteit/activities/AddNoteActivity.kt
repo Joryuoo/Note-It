@@ -1,6 +1,8 @@
 package com.android.noteit.activities
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -11,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
 import com.android.noteit.datamodels.NoteModel
-import com.android.noteit.managers.Note
-import com.android.noteit.managers.NoteManager
 
 class AddNoteActivity : AppCompatActivity() {
     private var noteIndex: Int? = null
@@ -20,21 +20,26 @@ class AddNoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_note_screen)
+
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
         val btnDelete = findViewById<ImageButton>(R.id.btnDelete)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         val etTitle = findViewById<EditText>(R.id.et_Title)
         val etNote = findViewById<EditText>(R.id.et_Content)
 
-        // Check if editing an existing note
-        // default value -1
         noteIndex = intent.getIntExtra("note_index", -1)
 
-        // if the index is > -1 mu edit rag existing na note
-        // since ang index kay gi gi pass ra through intent
         if (noteIndex != -1) {
-            // !! not-null assertion operator
             val note = AppManager.sessionUser?.noteList?.get(noteIndex!!)
-            // load ang text sa edit text
             if (note != null) {
                 etTitle.setText(note.title)
             }
@@ -49,21 +54,19 @@ class AddNoteActivity : AppCompatActivity() {
             val content = etNote.text.toString().trim()
 
             if (title.isEmpty() && content.isEmpty()) {
-                finish() // Dili mu save og note na empty
+                finish()
                 return@addCallback
             }
 
-            val finalTitle = if (title.isEmpty()) "Untitled" else title // if walay title then set it to "untitled"
-            val finalContent = content // i set ra ang content bisag way sud
+            val finalTitle = if (title.isEmpty()) "Untitled" else title
+            val finalContent = content
 
-//            if noteIndex != -1 meaning ang note kay gi load ra from existing note na stored sa data class
             if (noteIndex != -1) {
                 var note = AppManager.sessionUser?.noteList?.get(noteIndex!!)
                 if (note != null) {
                     note.updateNote(finalTitle, finalContent)
                 }
             } else {
-                // Add new note
                 AppManager.sessionUser?.noteList?.add(0, NoteModel(finalTitle, finalContent))
 
             }
@@ -82,14 +85,13 @@ class AddNoteActivity : AppCompatActivity() {
             val content = etNote.text.toString().trim()
 
             if (title.isEmpty() && content.isEmpty()) {
-                finish() // Dili mu save og note na empty
+                finish()
                 return@setOnClickListener
             }
 
-            val finalTitle = if (title.isEmpty()) "Untitled" else title // if walay title then set it to "untitled"
-            val finalContent = content // i set ra ang content bisag way sud
+            val finalTitle = if (title.isEmpty()) "Untitled" else title
+            val finalContent = content
 
-//            if noteIndex != -1 meaning ang note kay gi load ra from existing note na stored sa data class
             if (noteIndex != -1) {
                 var note = AppManager.sessionUser?.noteList?.get(noteIndex!!)
                 if (note != null) {
@@ -133,6 +135,6 @@ class AddNoteActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        AppManager.saveAppData(this)  // Save data when the activity is paused
+        AppManager.saveAppData(this)
     }
 }

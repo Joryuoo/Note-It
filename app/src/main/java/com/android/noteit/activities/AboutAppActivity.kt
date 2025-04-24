@@ -1,5 +1,7 @@
 package com.android.noteit.activities
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +15,16 @@ class AboutAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_app)
+
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
 
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
 

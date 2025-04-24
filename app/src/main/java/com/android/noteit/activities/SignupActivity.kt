@@ -10,12 +10,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
 //email validation import
 import android.util.Patterns
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
-import com.android.noteit.managers.UserManager
+
 
 class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

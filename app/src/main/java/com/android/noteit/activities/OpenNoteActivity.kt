@@ -1,11 +1,14 @@
 package com.android.noteit.activities
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -25,6 +28,16 @@ class OpenNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_note)
 
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
         val btnDelete = findViewById<ImageButton>(R.id.btnDelete)
         val btnArchive = findViewById<ImageButton>(R.id.archive)
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
@@ -39,6 +52,12 @@ class OpenNoteActivity : AppCompatActivity() {
             if (note != null) {
                 etTitle.setText(note.title)
                 etNote.setText(note.content)
+
+                if(note.isArchived){
+                    btnArchive.setImageResource(R.drawable.svg_unarchive)
+                } else{
+                    btnArchive.setImageResource(R.drawable.baseline_archive_24)
+                }
 
                 if(note.title == "Untitled"){
                     etTitle.setText("")
@@ -110,6 +129,7 @@ class OpenNoteActivity : AppCompatActivity() {
                         note.unArchiveNote()
                         Toast.makeText(this, "Note unarchived", Toast.LENGTH_SHORT).show()
                         AppManager.saveAppData(this)
+                        myDialog.dismiss()
                         finish()
                     }
 
@@ -142,6 +162,7 @@ class OpenNoteActivity : AppCompatActivity() {
                         note.archiveNote()
                         Toast.makeText(this, "Note added to archive", Toast.LENGTH_SHORT).show()
                         AppManager.saveAppData(this)
+                        myDialog.dismiss()
                         finish()
                     }
 
@@ -179,6 +200,7 @@ class OpenNoteActivity : AppCompatActivity() {
                     AppManager.sessionUser?.deleteNote(note)
                     Toast.makeText(this, "Note deleted", Toast.LENGTH_SHORT).show()
                     AppManager.saveAppData(this)
+                    myDialog.dismiss()
                     finish()
                 }
 

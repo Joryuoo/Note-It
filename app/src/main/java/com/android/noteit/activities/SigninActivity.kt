@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
-import com.android.noteit.managers.UserManager
 
 class SigninActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

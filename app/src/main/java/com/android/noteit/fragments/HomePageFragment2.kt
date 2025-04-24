@@ -4,24 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.noteit.R
 import com.android.noteit.activities.AddTaskActivity
 import com.android.noteit.app.AppManager
-import com.android.noteit.datamodels.TodoListModel
 import com.android.noteit.utils.TodoListAdapter
-import android.util.Log // Added for logging examples
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast // Added for feedback examples
+import android.widget.Toast
 import com.android.noteit.activities.OpenTaskActivity
 
 class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var todoAdapter: TodoListAdapter // Hold a reference to the adapter if needed later
+    private lateinit var todoAdapter: TodoListAdapter
     private lateinit var emptyImg: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,12 +32,10 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
             startActivity(Intent(requireContext(), AddTaskActivity::class.java))
         }
 
-        // --- RecyclerView Setup ---
-        recyclerView = view.findViewById<RecyclerView>(R.id.todolist_recyclerview)
+        recyclerView = view.findViewById(R.id.todolist_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val allTodos = AppManager.sessionUser?.taskList
-//        val filteredTodos = allTodos?.filter { !it.isArchived } ?: emptyList() // Provide empty list if null
 
         val filteredTodos = allTodos
             ?.filter { !it.isArchived } // 1. Filter out archived
@@ -52,7 +48,6 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
             emptyImg.visibility = View.GONE
         }
 
-        // 2. Create the Adapter instance with callback implementations
         todoAdapter = TodoListAdapter(
             // Pass the filtered list
             todos = filteredTodos,
@@ -87,8 +82,6 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
     override fun onResume() {
         super.onResume()
         val allTodos = AppManager.sessionUser?.taskList
-//        val filteredTodos = allTodos?.filter { !it.isArchived } ?: emptyList()
-
         val filteredTodos = allTodos
             ?.filter { !it.isArchived } // 1. Filter out archived
             ?.sortedBy { it.isDone }    // 2. Sort by isDone (false comes first)
@@ -101,7 +94,7 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
         }
 
         if (::todoAdapter.isInitialized) {
-            todoAdapter.updateList(filteredTodos) // Assumes updateList uses notifyDataSetChanged
+            todoAdapter.updateList(filteredTodos)
         } else {
             Log.w("HomePageFragment2", "Adapter not initialized in onResume")
         }
@@ -109,7 +102,7 @@ class HomePageFragment2 : Fragment(R.layout.fragment_home_page2) {
 
     override fun onPause() {
         super.onPause()
-        AppManager.saveAppData(requireContext())  // Save data when the activity is paused
+        AppManager.saveAppData(requireContext())
     }
 
 }

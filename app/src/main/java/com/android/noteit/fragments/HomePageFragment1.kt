@@ -30,7 +30,7 @@ class HomePageFragment1 : Fragment(R.layout.fragment_home_page1) {
             startActivity(intent)
         }
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.home_recyclerview)
+        recyclerView = view.findViewById(R.id.home_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val notes = AppManager.sessionUser?.noteList?.filter { !it.isArchived }?.toCollection(ArrayList())
@@ -42,7 +42,6 @@ class HomePageFragment1 : Fragment(R.layout.fragment_home_page1) {
                 emptyImg.visibility = View.GONE
             }
         }
-//        recyclerView.adapter = AppManager.sessionUser?.noteList?.let { NoteAdapter(it) }
         recyclerView.adapter = notes?.let {
             NoteAdapter(
                 it,
@@ -59,7 +58,6 @@ class HomePageFragment1 : Fragment(R.layout.fragment_home_page1) {
     override fun onResume() {
         super.onResume()
         // Notify the adapter that data has changed.
-//        recyclerView.adapter?.notifyDataSetChanged()
 
         val notes = AppManager.sessionUser?.noteList?.filter { !it.isArchived }?.toCollection(ArrayList())
 

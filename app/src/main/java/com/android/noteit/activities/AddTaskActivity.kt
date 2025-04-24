@@ -1,5 +1,7 @@
 package com.android.noteit.activities
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
@@ -15,6 +17,16 @@ class AddTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
 
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
         val tvTitle = findViewById<EditText>(R.id.et_Title)
         val tvDescription = findViewById<EditText>(R.id.et_Desc)
 
@@ -23,6 +35,11 @@ class AddTaskActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             val title = tvTitle.text.toString().trim()
             var desc = tvDescription.text.toString().trim()
+
+            if(title.isEmpty() && desc.isEmpty()){
+                finish()
+                return@setOnClickListener
+            }
 
             if(desc.isEmpty()) desc = ""
 
@@ -41,6 +58,11 @@ class AddTaskActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this){
             val title = tvTitle.text.toString().trim()
             var desc = tvDescription.text.toString().trim()
+
+            if(title.isEmpty() && desc.isEmpty()){
+                finish()
+                return@addCallback
+            }
 
             if(desc.isEmpty()) desc = ""
 

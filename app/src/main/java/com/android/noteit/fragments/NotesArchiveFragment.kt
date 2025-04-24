@@ -18,12 +18,11 @@ class NotesArchiveFragment : Fragment(R.layout.fragment_notes_archive) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.arNotes_recyclerview)
+        recyclerView = view.findViewById(R.id.arNotes_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        emptylistImg = view.findViewById<ImageView>(R.id.isArchiveEmpty)
+        emptylistImg = view.findViewById(R.id.isArchiveEmpty)
         val notes = AppManager.sessionUser?.noteList?.filter { it.isArchived }?.toCollection(ArrayList())
-//        recyclerView.adapter = AppManager.sessionUser?.noteList?.let { NoteAdapter(it) }
         recyclerView.adapter = notes?.let {
             NoteAdapter(
                 it,
@@ -48,7 +47,6 @@ class NotesArchiveFragment : Fragment(R.layout.fragment_notes_archive) {
     override fun onResume() {
         super.onResume()
         // Notify the adapter that data has changed.
-//        recyclerView.adapter?.notifyDataSetChanged()
 
         val notes = AppManager.sessionUser?.noteList?.filter { it.isArchived }?.toCollection(ArrayList())
 

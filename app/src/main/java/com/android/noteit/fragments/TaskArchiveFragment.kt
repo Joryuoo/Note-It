@@ -4,14 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.noteit.R
-import com.android.noteit.activities.AddTaskActivity
 import com.android.noteit.activities.OpenTaskActivity
 import com.android.noteit.app.AppManager
 import com.android.noteit.utils.TodoListAdapter
@@ -19,35 +17,32 @@ import com.android.noteit.utils.TodoListAdapter
 
 class TaskArchiveFragment : Fragment(R.layout.fragment_task_archive) {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var todoAdapter: TodoListAdapter // Hold a reference to the adapter if needed later
+    private lateinit var todoAdapter: TodoListAdapter
     private lateinit var emptylistImg: ImageView
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // --- RecyclerView Setup ---
-        recyclerView = view.findViewById<RecyclerView>(R.id.arTask_recyclerview)
+        recyclerView = view.findViewById(R.id.arTask_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        emptylistImg = view.findViewById<ImageView>(R.id.isArchiveEmpty)
+        emptylistImg = view.findViewById(R.id.isArchiveEmpty)
 
         val allTodos = AppManager.sessionUser?.taskList
-//        val filteredTodos = allTodos?.filter { it.isArchived } ?: emptyList() // Provide empty list if null
 
         val filteredTodos = allTodos
             ?.filter { it.isArchived } // 1. Filter out archived
             ?.sortedBy { it.isDone }    // 2. Sort by isDone (false comes first)
             ?: emptyList()              // 3. Handle null case
 
+        //indicator if the list is empty
         if(filteredTodos.isEmpty()){
             emptylistImg.visibility = View.VISIBLE
         } else{
             emptylistImg.visibility = View.GONE
         }
 
-        // 2. Create the Adapter instance with callback implementations
         todoAdapter = TodoListAdapter(
-            // Pass the filtered list
             todos = filteredTodos,
             // --- Checkbox Toggled Callback ---
             onCheckBoxToggled = { item, isChecked ->
@@ -79,7 +74,6 @@ class TaskArchiveFragment : Fragment(R.layout.fragment_task_archive) {
     override fun onResume() {
         super.onResume()
         val allTodos = AppManager.sessionUser?.taskList
-//        val filteredTodos = allTodos?.filter { it.isArchived } ?: emptyList()
 
         val filteredTodos = allTodos
             ?.filter { it.isArchived } // 1. Filter out archived
@@ -88,7 +82,7 @@ class TaskArchiveFragment : Fragment(R.layout.fragment_task_archive) {
 
 
         if (::todoAdapter.isInitialized) {
-            todoAdapter.updateList(filteredTodos) // Assumes updateList uses notifyDataSetChanged
+            todoAdapter.updateList(filteredTodos)
         } else {
             Log.w("HomePageFragment2", "Adapter not initialized in onResume")
         }

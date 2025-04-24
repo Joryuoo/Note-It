@@ -1,6 +1,8 @@
 package com.android.noteit.activities
 
 import android.content.Context
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.graphics.drawable.ColorDrawable
@@ -49,6 +51,16 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
+        //        screen orientation
+        val isTablet: Boolean = (resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE
+
+        if(isTablet){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        } else{
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
         btnEditProfilePic = findViewById(R.id.btnChangeProfile)
         profilePicture = findViewById(R.id.profilePicture)
 
@@ -59,11 +71,6 @@ class EditProfileActivity : AppCompatActivity() {
             Log.e("Profile", "uri is null")
         } else {
             Log.e("Profile", "Loading with glide")
-//            Glide.with(this)
-//                .load(AppManager.sessionUser?.profilepictureUri)
-//                .placeholder(R.drawable.profile_picture)
-//                .into(profilePicture)
-
             val uri = AppManager.sessionUser?.profilepictureUri
             if (uri != null) {
                 Glide.with(this)
@@ -187,12 +194,10 @@ class EditProfileActivity : AppCompatActivity() {
                 title.setText(msgtitle)
                 context.setText(msgContext)
 
-                // Handle negative button click
                 btnNegative.setOnClickListener {
                     myDialog.dismiss()
                 }
-
-                // Handle positive button click (confirm exit)
+                
                 btnPositive.setOnClickListener {
                     AppManager.sessionUser?.changeProfilePicture(safeUri)
                     if (!isFinishing) {

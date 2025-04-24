@@ -15,10 +15,6 @@ class TodoListModel {
         this.description = description
     }
 
-    fun updateTitle(title: String){
-        this.title = title
-    }
-
     fun updateTask(newTitle: String, newDescription: String, isdone: Boolean){
         if(!title.isEmpty()){
             title = newTitle
@@ -26,22 +22,6 @@ class TodoListModel {
             isDone = isdone
         }
     }
-
-    fun toogleCheckBox(){
-        if (isDone){
-            isDone = false
-        } else{
-            isDone = true
-        }
-    }
-
-    fun addToArchive(){
-        isArchived = true
-    }
-
-    fun unArchiveTask(){
-        isArchived = false
-    }
-
-
+    fun addToArchive(){ isArchived = true }
+    fun unArchiveTask(){isArchived = false }
 }

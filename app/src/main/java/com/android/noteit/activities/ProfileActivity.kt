@@ -3,12 +3,10 @@ package com.android.noteit.activities
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -17,9 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.android.noteit.R
 import com.android.noteit.app.AppManager
-import com.android.noteit.managers.UserManager.signed_in
 import com.bumptech.glide.Glide
-import java.io.File
 
 class ProfileActivity : AppCompatActivity() {
 

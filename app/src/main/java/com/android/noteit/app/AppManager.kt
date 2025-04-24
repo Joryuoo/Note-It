@@ -26,7 +26,6 @@ object AppManager {
         return registeredUsers.any{it.email == email}
     }
 
-
     fun registerUser(username: String, email:String, password: String, context: Context){
         var newUser: UserModel = UserModel(username, email, password)
         newUser.noteList.add(
@@ -59,22 +58,21 @@ object AppManager {
                 return "Email is already taken!"
             }
         }
-        //para safe lang
+
         if(!find_username(newUsername) && !find_email(newEmail)){
             val pos: Int = registeredUsers.indexOf(sessionUser)
             sessionUser?.username = newUsername
             sessionUser?.email = newEmail
             sessionUser?.password = newPassword
-            //para safe lang sad
             var updatedUser: UserModel? = sessionUser
 
             if (updatedUser != null) {
                 registeredUsers.set(pos, updatedUser)
-                sessionUser = updatedUser //trust issues malala
+                sessionUser = updatedUser
             }
             return "User updated successfully!"
         }
-        return  "ambot"
+        return  "debug"
     }
 
     fun getTaskById(taskId: String): TodoListModel? {
@@ -109,7 +107,7 @@ object AppManager {
         }
     }
 
-    //GSON functions
+    //----------------GSON functions-------------------
 
     // Gson instance for serialization and deserialization
     private val gson = Gson()

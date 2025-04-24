@@ -44,7 +44,7 @@
             android:minWidth="80dp"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:text="Todos"
+            android:text="To-Do"
             android:textColor="@color/white"
             android:fontFamily="@font/ritam_sans_demibold"
             android:background="@drawable/custom_button1"

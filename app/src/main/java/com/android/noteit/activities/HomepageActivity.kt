@@ -34,6 +34,7 @@ class HomepageActivity : AppCompatActivity() {
         } else{
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
+
         val btnHome = findViewById<ImageButton>(R.id.btnHome)
         val btnNotes = findViewById<ImageButton>(R.id.btnNotes)
         val btnTask = findViewById<ImageButton>(R.id.btnTask)
